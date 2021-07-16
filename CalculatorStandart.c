@@ -33,6 +33,11 @@ float power(float a, float b)
         result = result * a;
         i++;
     }
+
+    if(b==0){
+        return 1;
+    }
+
     return result;
 }
 //pengakaran akar kuadrat dari a ($a)
@@ -42,7 +47,7 @@ float radix(float a)
 // sisa bagi dari a bagi b (a%b)
 float modulus(float a, float b)
 {
-    int a, b;
+    //int a, b;
 }
 
 /* Method Tambahan */
@@ -59,6 +64,7 @@ void runCalculatorStandar()
 
     //end proses calculate logic
     printf("result : \n");
+    cetakStack(StrToInt(str));
     //dealokas string after use
     DealokasiString(&str);
 }

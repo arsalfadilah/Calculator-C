@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
+#include "stack.h"
+#include "CalculatorStandart.h"
 
 String input()
 {
@@ -21,17 +24,37 @@ String input()
     return str;
 }
 
-int StrToInt(String str)
+stack StrToInt(String str)
 {
-    int temp = 0, i = 0, idx = 0;
-    int arrtemp = 0;
-    bool flag = false;
-    while (i < LengthStr(str) && !flag)
+    stack integer;
+    infotype info;
+    createStack(&integer);
+    int temp = 0;
+    int i = 0, idx = 0;
+    float result = 0;
+    bool flag = true;
+    while (i < LengthStr(str))
     {
         temp = str[i] - 48;
-        arrtemp += temp;
+        printf("\n%d", temp);
         flag = (temp >= 0 && temp <= 9);
+        if(flag){
+            result = (temp) + power(10.0, idx) * result;
+            idx++;
+            printf("\n%.2f\n", result);
+        }
+        else{
+            info.Operand = result;
+            push(&integer, info);
+            idx = 0;
+        }
+        i++;
     }
+
+    info.Operand = result;
+    push(&integer, info);
+
+    return integer;
 }
 
 void DealokasiString(String *str)
