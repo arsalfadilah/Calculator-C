@@ -27,7 +27,6 @@ void runCalculatorStandar(){
     //input user
     printf("Input :\n");
     str = input();
-    printf("Test : %s", str);
     //lets some logic in here :
 
     //end proses calculate logic
