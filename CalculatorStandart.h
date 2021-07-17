@@ -2,16 +2,7 @@
 #define CALCULATORSTANDART_H
 
 #include "stack.h"
-
-    //  4.1 jika kalkulator standar 
-    //      4.1.1 tampil header menu
-    //      4.1.2 tampil form input
-    //      4.1.3 user menginputkan
-    //      4.1.4 tampil hasil
-    //      4.1.5 memilih reset atau tidak
-    //          4.1.5.1 jika y kembali ke 4.1.1
-    //          4.1.5.2 jika t kembali ke menu utama
-
+#include "string.h"
 /* Method Utama Kalkulator Standar */
 //penjumlahan a + b
 float add(float a, float b);
@@ -27,5 +18,13 @@ float power(float a, float b);
 float radix(float a);
 // sisa bagi dari a bagi b (a%b)
 float modulus(float a, float b);
+//getter
+//cek apakah a operand atau bukan
+bool isOperand(char a);
+//predenci atau level derajat setiap operator
+int Prec(char ch);
+//Convert infix to postfix expression
+void InfixToPostfix(stack *postfix, String infix);
+
 void runCalculatorStandar();
 #endif

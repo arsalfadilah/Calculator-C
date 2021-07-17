@@ -75,11 +75,11 @@ void cetakStack(stack s)
     if (!isStackEmpty(s))
     {
         p = s.top;
-        printf("[ %.2f ]", p->info.Operand);
+        printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
         p = p->next;
         while (p != NULL)
         {
-            printf(" - [ %.2f ]", p->info.Operand);
+        printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
             p = p->next;
         }
     }
@@ -116,4 +116,9 @@ void createStack(stack *s)
 
     //Algoritma
     (*s).top = NULL;
+}
+
+//peek top element
+infotype peek(stack s){
+    return s.top->info;
 }

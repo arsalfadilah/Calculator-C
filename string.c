@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <math.h>
 #include "stack.h"
-#include "CalculatorStandart.h"
 
 String input()
 {
@@ -24,37 +23,46 @@ String input()
     return str;
 }
 
-stack StrToInt(String str)
+stack StrToFloatStack(String str)
 {
     stack integer;
+    String tempStr = (String)malloc(1 * sizeof(char));
     infotype info;
     createStack(&integer);
-    int temp = 0;
-    int i = 0, idx = 0;
+    int temp = 0, i = 0, idx = 0;
     float result = 0;
     bool flag = true;
     while (i < LengthStr(str))
     {
         temp = str[i] - 48;
-        printf("\n%d", temp);
-        flag = (temp >= 0 && temp <= 9);
-        if(flag){
-            result = (temp) + power(10.0, idx) * result;
+        flag = ((temp >= 0 && temp <= 9) || temp == -2);
+        if (flag)
+        {
+            tempStr[idx] = str[i];
             idx++;
-            printf("\n%.2f\n", result);
+            realloc(tempStr, idx * sizeof(char));
         }
-        else{
-            info.Operand = result;
+        else
+        {
+            info.Operand = atof(tempStr);
             push(&integer, info);
+            DealokasiString(&tempStr);
             idx = 0;
+            tempStr = (String)malloc(1 * sizeof(char));
         }
         i++;
     }
-
-    info.Operand = result;
+    info.Operand = atof(tempStr);
     push(&integer, info);
+    DealokasiString(&tempStr);
 
     return integer;
+}
+
+//menghasilkan satu number float
+float StrToFloat(String floatStr){
+    float FloatNum = atof(floatStr);
+    return FloatNum;
 }
 
 void DealokasiString(String *str)

@@ -9,6 +9,9 @@ typedef char* String;
 String input();
 void DealokasiString(String *str);
 int LengthStr(String str);
-stack StrToInt(String str);
+//menghasilkan satu numbe float
+float StrToFloat(String floatStr);
+//menghasilkan banyak angka float
+stack StrToFloatStack(String str);
 
 #endif

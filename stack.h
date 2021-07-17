@@ -60,6 +60,7 @@ void cetakStack(stack s);
 bool isStackEmpty(stack s);
 //Mengirimkan true jika stack kosong, false jika tidak
 
-// urg edit didieu
+//peek top element
+infotype peek(stack s);
 
 #endif
