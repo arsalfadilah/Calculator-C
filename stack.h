@@ -24,43 +24,46 @@ typedef struct{
     address top;
 }stack;
 
-void createStack(stack *s);
 /* I.S : S terdefinisi, tidak diketahui nilainya
    F.S : S diinisialisasi top(s) = nil,
 */
+void createStack(stack *s);
 
-/* {Opeasi terhadap komponen : selektor Get dan Set} */
+/* {Operasi terhadap komponen : selektor Get dan Set} */
 //Destruktor or Dealokator
-address alokasi(infotype x);
 //Mengirim sebuah elemen stack dalam bentuk address
+address alokasi(infotype x);
 
-void dealokasi(address p);
 /* I.S : P terdefinisi
    F.S : P dikembalikan ke sistem
    		 Melakukan dealokasi / pengenmbalian address P ke sistem
 */
-
-/* {Kelompok Interaksi Dengan I/O Device} */
-void push(stack *s, infotype x);
-/* I.S : S terdefinisi sembarang, mungkin kosong
-   F.S : S bertambah sebuah elemen sebagai elemen pertama
-*/
-
-void pop(stack *s, infotype *x);
-/* I.S : S terdefinisi, Stack tidak kosong
-   F.S : Menghapus elemen pada top(s)
-*/
-
-void cetakStack(stack s);
-/* I.S : S terdefinisi, mungkin kosong
-   F.S : Menampilkan seluruh elemen dalam stack ke layar dari mulai TOP sampai dengan buttom jika tidak kosong
-*/
-
-/* {Kelompok Operasi Cek elemen kosong} */
-bool isStackEmpty(stack s);
-//Mengirimkan true jika stack kosong, false jika tidak
+void dealokasi(address p);
 
 //peek top element
 infotype peek(stack s);
+
+/* {Kelompok Interaksi Dengan I/O Device} */
+/* I.S : S terdefinisi sembarang, mungkin kosong
+   F.S : S bertambah sebuah elemen sebagai elemen pertama
+*/
+void push(stack *s, infotype x);
+
+/* I.S : S terdefinisi, Stack tidak kosong
+   F.S : Menghapus elemen pada top(s)
+*/
+void pop(stack *s, infotype *x);
+
+/* I.S : S terdefinisi, mungkin kosong
+   F.S : Menampilkan seluruh elemen dalam stack ke layar dari mulai TOP sampai dengan buttom jika tidak kosong
+*/
+void cetakStack(stack s);
+
+//copy stack source ke stack destination
+void stackcpy(stack *destination, stack source);
+
+/* {Kelompok Operasi Cek elemen kosong} */
+//Mengirimkan true jika stack kosong, false jika tidak
+bool isStackEmpty(stack s);
 
 #endif

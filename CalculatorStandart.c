@@ -1,7 +1,8 @@
 #include "CalculatorStandart.h"
+#include "string.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "string.h"
+#include <Windows.h>
 
 /* Method Utama Kalkulator Standar */
 //penjumlahan a + b
@@ -139,7 +140,7 @@ void InfixToPostfix(stack *postfix, String infix)
         }
         else
         {// tidak : looping selama stack tidak kosong 
-         // untuk menyimpan operator dengan urutan operasi matematics yang benar 
+         // untuk menyimpan operator dengan urutan operasi matematik yang benar 
          // (lihat prec untuk mengetahui level setiap operator)
             while (!isStackEmpty(operator) && Prec(infix[i]) <= Prec(peek(operator).Operator))
             {
@@ -162,28 +163,53 @@ void InfixToPostfix(stack *postfix, String infix)
     dealokasi(operator.top);
 }
 
+//convert postfix to prefix
+void PostfixToPrefix(stack *prefix, stack postfix){
+    infotype info;
+    while (!isStackEmpty(postfix))
+    {
+        pop(&postfix, &info);
+        push(&(*prefix), info);
+    }
+}
+
 /* Method Tambahan */
 //memulai kalkultor standar
 void runCalculatorStandar()
 {
     //tampil judul
-    stack postfix;
+    HoldCls();
+    printf("============================\n");
+    printf("CALCULATOR STANDART TEAM NINE\n");
+    printf("============================\n");
+    //buat stack postfix agar mudah langsung di calculate
+    stack postfix, prefix, tempPostfix;
     createStack(&postfix);
-    printf("============================\n");
-    printf("CALCULATOR STANDAR TEAM NINE\n");
-    printf("============================\n");
+    createStack(&prefix);
     //input user
-    printf("Input :\n");
+    printf("Input Infix Expression :\n");
     String infix = input();
     //convert infix expression to posfix
     InfixToPostfix(&postfix, infix);
+    //copy agar postfix bisa di print lagi
+    stackcpy(&tempPostfix, postfix);
     //convert postfix to prefix : (reverser the postfix expression)
-
+    PostfixToPrefix(&prefix, tempPostfix);
     //calculate
-
+    // . . . (belum ada haha)
     //show a result
-    printf("result Postfix : \n");
+    printf("result Postfix :\n");
     cetakStack(postfix);
+    printf("Result Prefix :\n");
+    cetakStack(prefix);
+    HoldCls();
     //dealokasi infix string after use
     DealokasiString(&infix);
+}
+
+/* Method UI */
+void HoldCls(){
+    printf("\n");
+    system("pause");
+    system("cls");
 }

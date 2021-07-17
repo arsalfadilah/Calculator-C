@@ -43,10 +43,6 @@ void push(stack *s, infotype x)
 
 void pop(stack *s, infotype *x)
 {
-    /* I.S : S terdefinisi, Stack tidak kosong
-   F.S : Menghapus elemen pada top(s)
-*/
-
     //Kamus
     address pTOP, tmp2;
     int out;
@@ -79,7 +75,7 @@ void cetakStack(stack s)
         p = p->next;
         while (p != NULL)
         {
-        printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+            printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
             p = p->next;
         }
     }
@@ -91,11 +87,6 @@ void cetakStack(stack s)
 
 bool isStackEmpty(stack s)
 {
-    //Mengirimkan true jika stack kosong, false jika tidak
-
-    //Kamus
-
-    //ALgoritma
     if (s.top == NULL)
     {
         return true;
@@ -108,17 +99,44 @@ bool isStackEmpty(stack s)
 
 void createStack(stack *s)
 {
-    /* I.S : S terdefinisi, tidak diketahui nilainya
-   F.S : S diinisialisasi top(s) = nil,
-*/
-
-    //Kamus
-
-    //Algoritma
     (*s).top = NULL;
 }
 
+void stackcpy(stack *destination, stack source)
+{
+    ElemStack *p, *q;
+    infotype tempInfo = source.top->info;
+    stack tempStack;
+    createStack(&tempStack);
+    createStack(&(*destination));
+    //Algoritma
+    //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
+    if (!isStackEmpty(source))
+    {
+        p = source.top;
+        //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+        push(&tempStack, p->info);
+        p = p->next;
+        while (p != NULL)
+        {
+            //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+            push(&tempStack, p->info);
+            p = p->next;
+        }
+        while (!isStackEmpty(tempStack))
+        {
+            pop(&tempStack, &tempInfo);
+            push(&(*destination), tempInfo);
+        }
+    }
+    else
+    {
+        printf("[ Empty ]");
+    }
+}
+
 //peek top element
-infotype peek(stack s){
+infotype peek(stack s)
+{
     return s.top->info;
 }

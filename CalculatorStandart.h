@@ -25,6 +25,14 @@ bool isOperand(char a);
 int Prec(char ch);
 //Convert infix to postfix expression
 void InfixToPostfix(stack *postfix, String infix);
-
+//convert postfix to prefix
+void PostfixToPrefix(stack *prefix, stack postfix);
+//run calculator standar program
 void runCalculatorStandar();
+
+/* method UI */
+//menahan layar meminta inputan 
+//press any key to continue dan membersihkannya
+void HoldCls();
+
 #endif
