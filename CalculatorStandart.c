@@ -53,6 +53,22 @@ float modulus(float a, float b)
     //int a, b;
 }
 
+//hasil dari perhitungan postfix expression
+float calculate(stack postfix){
+    //1. peek terlebih dahulu stack postfix
+    //  1.1 jika operand masukan ke stack result
+    //  1.2 jika operator
+    //      1.2.1 jika '+'
+    //          1.2.1.1 pop dari stack result dan simpan info operand ke variabel b
+    //          1.2.1.2 pop dari stack result dan simpan info operand ke varibel a
+    //          1.2.1.3 dapatkan hasil dari add(a, b) kemudian push kembali ke stack result
+    //      1.2.2 lakukan hal yang sama jika operasi '-', '*', '/', '^'
+    //      1.2.3 untuk operasi akar (misal : 5$ dibaca akar kuadrat dari 5)
+    //          1.2.3.1 pop dari stack result dan simpan info operand ke var a
+    //          1.2.3.2 dapatkan hasil dari radix(a) kemudian push ke stack result
+    //2. lakukan hal 1 sampai stack posfix kosong
+}
+
 //cek apakah ch operand atau bukan
 bool isOperand(char ch)
 {
@@ -131,7 +147,7 @@ void InfixToPostfix(stack *postfix, String infix)
             if (!isStackEmpty(operator) && peek(operator).Operator != '(')
             {//iya : show error input operator dan kembalikan NULL
                 printf("Wrong Input Operators\n");
-                //return;
+                return;
             }
             else
             {//tidak : keluarkan '(' dari stack operator

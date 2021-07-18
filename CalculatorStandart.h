@@ -18,6 +18,8 @@ float power(float a, float b);
 float radix(float a);
 // sisa bagi dari a bagi b (a%b)
 float modulus(float a, float b);
+//hasil dari perhitungan postfix expression
+float calculate(stack postfix);
 //getter
 //cek apakah a operand atau bukan
 bool isOperand(char a);
@@ -30,7 +32,7 @@ void PostfixToPrefix(stack *prefix, stack postfix);
 //run calculator standar program
 void runCalculatorStandar();
 
-/* method UI */
+/* Method UI */
 //menahan layar meminta inputan 
 //press any key to continue dan membersihkannya
 void HoldCls();

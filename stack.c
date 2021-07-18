@@ -110,16 +110,13 @@ void stackcpy(stack *destination, stack source)
     createStack(&tempStack);
     createStack(&(*destination));
     //Algoritma
-    //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
     if (!isStackEmpty(source))
     {
         p = source.top;
-        //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
         push(&tempStack, p->info);
         p = p->next;
         while (p != NULL)
         {
-            //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
             push(&tempStack, p->info);
             p = p->next;
         }

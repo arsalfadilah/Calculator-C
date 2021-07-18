@@ -22,8 +22,7 @@ int main(){
     //Algoritma
     //1. mulai aplikasi (aktif selama user tidak memilih exit)
     while(menu!=0){
-        //2. tampil menu utama
-        //3. pemilihan menu
+        //2. tampil menu utama dan pemilihan menu
         switch (menu = chooseMainMenu())
         {
             //4. masuk ke setiap menu
