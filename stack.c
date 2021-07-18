@@ -22,6 +22,7 @@ address alokasi(infotype x)
 
 void dealokasi(address p)
 {
+    p = NULL;
     free(p);
 }
 
@@ -57,7 +58,7 @@ void pop(stack *s, infotype *x)
     else
     { // lebih dari satu elemen
         (*s).top = pTOP->next;
-        pTOP->next = NULL;
+        dealokasi(pTOP->next);
     }
 }
 
