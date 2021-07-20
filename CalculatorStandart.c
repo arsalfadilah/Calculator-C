@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
+#include <math.h>
 
 /* Method Utama Kalkulator Standar */
 //penjumlahan a + b
@@ -46,27 +47,115 @@ float power(float a, float b)
 //pengakaran akar kuadrat dari a (a$)
 float radix(float a)
 {
+    return sqrt(a);
 }
 // sisa bagi dari a bagi b (a%b)
-float modulus(float a, float b)
-{
-    //int a, b;
+// int modulus(float a, float b)
+// {
+//     int c = a;
+//     int d = b;
+//     return c % d;
+// }
+
+bool isOperator(char ch){
+        switch (ch)
+    {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '^':
+    case '$':
+        return true;
+    }
+    return false;
 }
 
 //hasil dari perhitungan postfix expression
-float calculate(stack postfix){
+float calculate(stack postfix)
+{
     //1. peek terlebih dahulu stack postfix
+    stack result;
+    createStack(&result);
+    infotype forPeek;
+    infotype collect;
+    float a, b, res;
+
     //  1.1 jika operand masukan ke stack result
-    //  1.2 jika operator
-    //      1.2.1 jika '+'
-    //          1.2.1.1 pop dari stack result dan simpan info operand ke variabel b
-    //          1.2.1.2 pop dari stack result dan simpan info operand ke varibel a
-    //          1.2.1.3 dapatkan hasil dari add(a, b) kemudian push kembali ke stack result
-    //      1.2.2 lakukan hal yang sama jika operasi '-', '*', '/', '^'
-    //      1.2.3 untuk operasi akar (misal : 5$ dibaca akar kuadrat dari 5)
-    //          1.2.3.1 pop dari stack result dan simpan info operand ke var a
-    //          1.2.3.2 dapatkan hasil dari radix(a) kemudian push ke stack result
-    //2. lakukan hal 1 sampai stack posfix kosong
+    while (!isStackEmpty(postfix))
+    {
+        pop(&postfix, &forPeek);
+        if (!isOperator(forPeek.Operator))
+        {
+            push(&result, forPeek);
+        }
+        //  1.2 jika operator
+        else
+        {
+            if(forPeek.Operator=='+'){
+                    pop(&result, &forPeek);
+                    b = forPeek.Operand;
+                    pop(&result, &forPeek);
+                    a = forPeek.Operand;
+                    res = add(a, b);
+                    forPeek.Operator = '\0';
+                    forPeek.Operand = res;
+                    push(&result, forPeek);
+            } else if(forPeek.Operator == '-'){
+                    pop(&result, &forPeek);
+                    b = forPeek.Operand;
+                    pop(&result, &forPeek);
+                    a = forPeek.Operand;
+                    res = substract(a, b);
+                    forPeek.Operator = '\0';
+                    forPeek.Operand = res;
+                    push(&result, forPeek);
+            } else if(forPeek.Operator == '*'){
+                    pop(&result, &forPeek);
+                    b = forPeek.Operand;
+                    pop(&result, &forPeek);
+                    a = forPeek.Operand;
+                    res = multiply(a, b);
+                    forPeek.Operator = '\0';
+                    forPeek.Operand = res;
+                    push(&result, forPeek);
+            }
+            else if (forPeek.Operator == '/'){
+                pop(&result, &forPeek);
+                    b = forPeek.Operand;
+                    pop(&result, &forPeek);
+                    a = forPeek.Operand;
+                    res = divide(a, b);
+                    forPeek.Operator = '\0';
+                    forPeek.Operand = res;
+                    push(&result, forPeek);
+            }
+            else if (forPeek.Operator == '^'){
+                pop(&result, &forPeek);
+                    b = forPeek.Operand;
+                    pop(&result, &forPeek);
+                    a = forPeek.Operand;
+                    res = power(a, b);
+                    forPeek.Operator = '\0';
+                    forPeek.Operand = res;
+                    push(&result, forPeek);
+            }
+            else if (forPeek.Operator == '$'){
+                    pop(&result, &forPeek);
+                    a = forPeek.Operand;
+                    res = radix(a);
+                    forPeek.Operator = '\0';
+                    forPeek.Operand = res;
+                    push(&result, forPeek);
+            }
+             else {
+                printf("Ilegal Argument");
+                return 0;
+            }
+        }
+    }
+    pop(&result, &forPeek);
+    return (forPeek.Operand);
 }
 
 //cek apakah ch operand atau bukan
@@ -85,6 +174,7 @@ int Prec(char ch)
 
     case '*':
     case '/':
+    case '%':
         return 2;
 
     case '^':
@@ -99,19 +189,18 @@ void InfixToPostfix(stack *postfix, String infix)
 {
     //create stack
     stack operator;
-    //createStack(&(*postfix));
     createStack(&operator);
     //sebagai penampung operand atau operator
     infotype info;
     String floatStr;
-    int i=0, tempIdx = 0, idxFloatStr = 0;
+    int i = 0, tempIdx = 0, idxFloatStr = 0;
     //scan semua character di String infix
     while (i < LengthStr(infix))
     {
         //apakah infix[i] adalah operand (0-9 atau '.') ?
         if (isOperand(infix[i]))
-        {   //iya : alokasi string untuk convert string number ke float number
-            floatStr = (String) malloc(1 * sizeof(char));
+        { //iya : alokasi string untuk convert string number ke float number
+            floatStr = (String)malloc(1 * sizeof(char));
             //looping sampai ketemu bukan operand menandakan angka berakhir
             while (isOperand(infix[i]))
             {
@@ -131,13 +220,13 @@ void InfixToPostfix(stack *postfix, String infix)
         }
         //apakah infix ke i adalah '(' ?
         else if (infix[i] == '(')
-        {//iya : push operator '(' ke stack operator
+        { //iya : push operator '(' ke stack operator
             info.Operator = infix[i];
             push(&operator, info);
         }
         //apakah infix yang ke i adalah ')' ?
         else if (infix[i] == ')')
-        {//iya : pop semua yang ada dalam tanda '( )'. misal : '(+-)'
+        { //iya : pop semua yang ada dalam tanda '( )'. misal : '(+-)'
             while (!isStackEmpty(operator) && peek(operator).Operator != '(')
             {
                 pop(&operator, & info);
@@ -145,22 +234,22 @@ void InfixToPostfix(stack *postfix, String infix)
             }
             //apakah stack belum kosong namun top dari stack operator bukan '('
             if (!isStackEmpty(operator) && peek(operator).Operator != '(')
-            {//iya : show error input operator dan kembalikan NULL
+            { //iya : show error input operator dan kembalikan NULL
                 printf("Wrong Input Operators\n");
                 return;
             }
             else
-            {//tidak : keluarkan '(' dari stack operator
-                pop(&operator, &info);
+            { //tidak : keluarkan '(' dari stack operator
+                pop(&operator, & info);
             }
         }
         else
-        {// tidak : looping selama stack tidak kosong 
-         // untuk menyimpan operator dengan urutan operasi matematik yang benar 
-         // (lihat prec untuk mengetahui level setiap operator)
+        {   // tidak : looping selama stack tidak kosong
+            // untuk menyimpan operator dengan urutan operasi matematik yang benar
+            // (lihat prec untuk mengetahui level setiap operator)
             while (!isStackEmpty(operator) && Prec(infix[i]) <= Prec(peek(operator).Operator))
             {
-                pop(&operator, &info);
+                pop(&operator, & info);
                 push(&(*postfix), info);
             }
             info.Operand = 0;
@@ -172,7 +261,7 @@ void InfixToPostfix(stack *postfix, String infix)
     //pop semua elem dari stack operator dan tempatkan di stack postfix
     while (!isStackEmpty(operator))
     {
-        pop(&operator, &info);
+        pop(&operator, & info);
         push(&(*postfix), info);
     }
     //dealokasi stack operator
@@ -180,7 +269,8 @@ void InfixToPostfix(stack *postfix, String infix)
 }
 
 //convert postfix to prefix
-void PostfixToPrefix(stack *prefix, stack postfix){
+void PostfixToPrefix(stack *prefix, stack postfix)
+{
     infotype info;
     while (!isStackEmpty(postfix))
     {
@@ -212,7 +302,9 @@ void runCalculatorStandar()
     //convert postfix to prefix : (reverser the postfix expression)
     PostfixToPrefix(&prefix, tempPostfix);
     //calculate
-    // . . . (belum ada haha)
+    float result = calculate(prefix);
+    printf("Result :\n");
+    printf("%.2f\n", result);
     //show a result
     printf("result Postfix :\n");
     cetakStack(postfix);
@@ -224,7 +316,8 @@ void runCalculatorStandar()
 }
 
 /* Method UI */
-void HoldCls(){
+void HoldCls()
+{
     printf("\n");
     system("pause");
     system("cls");

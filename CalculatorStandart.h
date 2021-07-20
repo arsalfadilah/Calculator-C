@@ -17,12 +17,13 @@ float power(float a, float b);
 //pengakaran akar kuadrat dari a ($a)
 float radix(float a);
 // sisa bagi dari a bagi b (a%b)
-float modulus(float a, float b);
+int modulus(float a, float b);
 //hasil dari perhitungan postfix expression
 float calculate(stack postfix);
 //getter
 //cek apakah a operand atau bukan
 bool isOperand(char a);
+bool isOperator(char ch);
 //predenci atau level derajat setiap operator
 int Prec(char ch);
 //Convert infix to postfix expression

@@ -30,6 +30,8 @@ kilometer KilometerToMeter(meter m){
 /* Method Tambahan */
 void runCalculatorPanjang(){
     //tampil judul 
+    // 1m+2km
+    // 2001 meter
     printf("===========================\n");
     printf("CALCULATOR PANJANG TEAM NINE\n");
     printf("===========================\n");
