@@ -2,6 +2,7 @@
 #define CALCULATORPANJANG_H
 
 #include "stack.h"
+#include "string.h"
 
 typedef float meter;
 typedef float kilometer;
@@ -28,11 +29,13 @@ meter MeterToKilometer (kilometer km);
 // convert centimenter to kilomoter
 centimeter CentimeterToKilometer (kilometer km);
 // convert centimeter to kilometer
-centimeter CentimeterToMeter(meter m);
+float CentimeterToMeter(float m);
 // convert kilometer to centimeter
 kilometer KilometerToCentimeter(centimeter cm);
 // convet kilometer to meter
-kilometer KilometerToMeter(meter m);
+float KilometerToMeter(float m);
+
+void InfixToPostfixCP(stack *postfix, String infix);
 
 void runCalculatorPanjang();
 
