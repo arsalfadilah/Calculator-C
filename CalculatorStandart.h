@@ -27,7 +27,7 @@ bool isOperator(char ch);
 //predenci atau level derajat setiap operator
 int Prec(char ch);
 //Convert infix to postfix expression
-void InfixToPostfix(stack *postfix, String infix);
+void InfixToPrefix(stack *prefix, String infix);
 //convert postfix to prefix
 void PostfixToPrefix(stack *prefix, stack postfix);
 //run calculator standar program

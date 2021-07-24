@@ -184,8 +184,8 @@ int Prec(char ch)
     return -1;
 }
 
-// Convert infix to postfix
-void InfixToPostfix(stack *postfix, String infix)
+// Convert infix to prefix
+void InfixToPrefix(stack *prefix, String infix)
 {
     //create stack
     stack operator;
@@ -214,7 +214,7 @@ void InfixToPostfix(stack *postfix, String infix)
             //push setiap operand dan jadikan operator \0
             info.Operator = '\0';
             info.Operand = StrToFloat(floatStr);
-            push(&(*postfix), info);
+            push(&(*prefix), info);
             //dealoksi string setelah dipakai
             DealokasiString(&floatStr);
         }
@@ -230,7 +230,7 @@ void InfixToPostfix(stack *postfix, String infix)
             while (!isStackEmpty(operator) && peek(operator).Operator != '(')
             {
                 pop(&operator, & info);
-                push(&(*postfix), info);
+                push(&(*prefix), info);
             }
             //apakah stack belum kosong namun top dari stack operator bukan '('
             if (!isStackEmpty(operator) && peek(operator).Operator != '(')
@@ -250,7 +250,7 @@ void InfixToPostfix(stack *postfix, String infix)
             while (!isStackEmpty(operator) && Prec(infix[i]) <= Prec(peek(operator).Operator))
             {
                 pop(&operator, & info);
-                push(&(*postfix), info);
+                push(&(*prefix), info);
             }
             info.Operand = 0;
             info.Operator = infix[i];
@@ -258,11 +258,11 @@ void InfixToPostfix(stack *postfix, String infix)
         }
         i++;
     }
-    //pop semua elem dari stack operator dan tempatkan di stack postfix
+    //pop semua elem dari stack operator dan tempatkan di stack prefix
     while (!isStackEmpty(operator))
     {
         pop(&operator, & info);
-        push(&(*postfix), info);
+        push(&(*prefix), info);
     }
     //dealokasi stack operator
     dealokasi(operator.top);
@@ -289,26 +289,26 @@ void runCalculatorStandar()
     printf("CALCULATOR STANDART TEAM NINE\n");
     printf("============================\n");
     //buat stack postfix agar mudah langsung di calculate
-    stack postfix, prefix, tempPostfix;
+    stack postfix, prefix;
     createStack(&postfix);
     createStack(&prefix);
     //input user
     printf("Input Infix Expression :\n");
     String infix = input();
-    //convert infix expression to posfix
-    InfixToPostfix(&postfix, infix);
-    //copy agar postfix bisa di print lagi
-    stackcpy(&tempPostfix, postfix);
-    //convert postfix to prefix : (reverser the postfix expression)
-    PostfixToPrefix(&prefix, tempPostfix);
-    //calculate
-    float result = calculate(prefix);
+    //convert infix expression to prefix
+    InfixToPrefix(&prefix, infix);
+    //copykan
+    stackcpy(&postfix, prefix);
+    //reverse stack agar terbaca postfix
+    reverseStack(&postfix);
+    //calculate dari prefix
+    float result = calculate(postfix);
     printf("Result :\n");
     printf("%.2f\n", result);
     //show a result
     printf("result Postfix :\n");
     cetakStack(postfix);
-    printf("Result Prefix :\n");
+    printf("\nResult Prefix :\n");
     cetakStack(prefix);
     HoldCls();
     //dealokasi infix string after use

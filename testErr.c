@@ -4,14 +4,17 @@
 int main()
 {
    String str;
+   //char ch = '12';
+   createString(&str);
    printf("Test String\n");
-   alokasiStr(&str, "a");
-   //char *ch = "a";
-   //strcpy(str, ch);
-
-   // alokasiStr(&str, 'r');
-   printf("ini : %s", str);
-
-
+   // /printf("char 2 digit : %c", ch);
+   addStr(&str, 'a');
+   addStr(&str, 'r');
+   addStr(&str, 'z');
+   addStr(&str, 'i');
+   addStr(&str, 'i');
+   addStr(&str, 'a');
+   printf("INi STRING : %s\n", str);
+   system("pause");
    return 0;
 }

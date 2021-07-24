@@ -169,7 +169,7 @@ void runCalculatorPanjang(){
     //show a result
     printf("result Postfix :\n");
     cetakStack(postfix);
-    printf("Result Prefix :\n");
+    printf("\nResult Prefix :\n");
     cetakStack(prefix);
     HoldCls();
     //dealokasi infix string after use

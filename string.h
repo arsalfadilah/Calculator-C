@@ -14,4 +14,7 @@ float StrToFloat(String floatStr);
 //menghasilkan banyak angka float
 //stack StrToFloatStack(String str);
 
+String alokasiStr(char ch);
+void createString(String *str);
+
 #endif

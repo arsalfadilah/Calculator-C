@@ -67,18 +67,37 @@ void pop(stack *s, infotype *x)
 void cetakStack(stack s)
 {
     ElemStack *p, *q;
+
     infotype temp = s.top->info;
 
     //Algoritma
-    printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
+    //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
     if (!isStackEmpty(s))
     {
         p = s.top;
-        printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
-        p = p->next;
+        //print info disini
+        // if (p->info.Operand == 0)
+        // {
+        //     printf("%c", p->info.Operator);
+        // }
+        // else
+        // {
+        //     printf("%.2f", p->info.Operand);
+        // }
+
+        // p = p->next;
         while (p != NULL)
         {
-            printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+            //print info disini
+            if (p->info.Operand == 0)
+            {
+                printf("%c ", p->info.Operator);
+            }
+            else
+            {
+                printf("%.2f ", p->info.Operand);
+            }
+
             p = p->next;
         }
     }
@@ -141,47 +160,73 @@ infotype peek(stack s)
     return s.top->info;
 }
 
-//get element from top to bottom and then reverse
-String toString(stack s)
+void reverseStack(stack *s)
 {
-    String str;
-    address p;
-    infotype temp = s.top->info;
-
-    //Algoritma
-    //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
-    if (!isStackEmpty(s))
+    stack temp;
+    infotype info;
+    stackcpy(&temp, *s);
+    while (!isStackEmpty(*s))
     {
-        p = s.top;
-        //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
-        if (p->info.Operand != 0)
-        {
-            strcpy(str, p->info.Operator);
-        }
-        else
-        {
-            char ch = p->info.Operand + '0';
-            strcpy(str, ch);
-        }
-
-        p = p->next;
-        while (p != NULL)
-        {
-            //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
-            if (p->info.Operand != 0)
-            {
-                strcpy(str, p->info.Operator);
-            }
-            else
-            {
-                char ch = p->info.Operand + '0';
-                strcpy(str, ch);
-            }
-            p = p->next;
-        }
+        pop(&(*s), &info);
     }
-    else
+    while (!isStackEmpty(temp))
     {
-        printf("[ Empty ]");
+        pop(&temp, &info);
+        push(&(*s), info);
     }
 }
+
+//get element from top to bottom and then reverse
+// String toString(stack s)
+// {
+//     String str;
+//     createString(&str);
+//     address p;
+//     infotype temp = s.top->info;
+
+//     //Algoritma
+//     //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
+//     if (!isStackEmpty(s))
+//     {
+//         p = s.top;
+//         //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+//         if (p->info.Operand == 0)
+//         {
+//             char ch = p->info.Operator;
+//             addStr(&str, ch);
+//             printf("operator : %c\n", ch);
+//         }
+//         else
+//         {
+//             char ch = p->info.Operand + '0'; //convert number to char
+//             addStr(&str, ch);
+//             printf("opreand : %c\n", ch);
+//         }
+
+//         p = p->next;
+//         while (p != NULL)
+//         {
+//             //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+//             if (p->info.Operand == 0)
+//             {
+//                 char ch = p->info.Operator;
+//                 addStr(&str, ch);
+//                 printf("operator %c\n", ch);
+//             }
+//             else
+//             {
+//                 char ch = p->info.Operand + '0'; //convert number to char
+//                 addStr(&str, ch);
+//                 printf("operand : %c\n", ch);
+//             }
+//             p = p->next;
+//         }
+//         //strrev(str);
+//     }
+//     else
+//     {
+//         addStr(&str, '-');
+//     }
+//     printf("di tostring : %s", str);
+//     return str;
+// }

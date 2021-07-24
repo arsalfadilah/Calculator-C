@@ -7,6 +7,7 @@
 #define STACK_H
 
 #include <stdbool.h>
+#include "string.h"
 
 typedef struct{
     float Operand;  // Angka
@@ -62,8 +63,14 @@ void cetakStack(stack s);
 //copy stack source ke stack destination
 void stackcpy(stack *destination, stack source);
 
+void reverseStack(stack *s);
+
+//String toString(stack s);
+
 /* {Kelompok Operasi Cek elemen kosong} */
 //Mengirimkan true jika stack kosong, false jika tidak
 bool isStackEmpty(stack s);
+
+
 
 #endif

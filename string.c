@@ -6,6 +6,10 @@
 #include <math.h>
 #include "stack.h"
 
+void createString(String *str){
+    *str = NULL;
+}
+
 String input()
 {
     String str;
@@ -22,42 +26,17 @@ String input()
     str[i] = '\0';
     return str;
 }
-
-// stack StrToFloatStack(String str)
-// {
-//     stack integer;
-//     String tempStr = (String)malloc(1 * sizeof(char));
-//     infotype info;
-//     createStack(&integer);
-//     int temp = 0, i = 0, idx = 0;
-//     float result = 0;
-//     bool flag = true;
-//     while (i < LengthStr(str))
-//     {
-//         temp = str[i] - 48;
-//         flag = ((temp >= 0 && temp <= 9) || temp == -2);
-//         if (flag)
-//         {
-//             tempStr[idx] = str[i];
-//             idx++;
-//             realloc(tempStr, idx * sizeof(char));
-//         }
-//         else
-//         {
-//             info.Operand = atof(tempStr);
-//             push(&integer, info);
-//             DealokasiString(&tempStr);
-//             idx = 0;
-//             tempStr = (String)malloc(1 * sizeof(char));
-//         }
-//         i++;
-//     }
-//     info.Operand = atof(tempStr);
-//     push(&integer, info);
-//     DealokasiString(&tempStr);
-
-//     return integer;
-// }
+//
+void addStr(String *str, char ch){
+    int idx = LengthStr(*str);
+    if(idx==0)
+        *str = (String)malloc(1*sizeof(char));
+    (*str)[idx] = ch;
+    idx++;
+    realloc(*str, idx *sizeof(char));
+    
+    (*str)[idx] = '\0';
+}
 
 //menghasilkan satu number float
 float StrToFloat(String floatStr){
@@ -73,5 +52,7 @@ void DealokasiString(String *str)
 
 int LengthStr(String str)
 {
+    if(str==NULL)
+        return 0;
     return strlen(str);
 }
