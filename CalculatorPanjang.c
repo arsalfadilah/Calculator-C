@@ -1,9 +1,9 @@
 #include "CalculatorPanjang.h"
 #include "CalculatorStandart.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include "string.h"
 #include "stack.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 // convert meter to centimeter 
 meter MeterToCentimeter(centimeter cm){
@@ -145,8 +145,6 @@ void InfixToPostfixCP(stack *postfix, String infix)
 /* Method Tambahan */
 void runCalculatorPanjang(){
     //tampil judul 
-    // 1m+2km
-    // 2001 meter
     printf("===========================\n");
     printf("CALCULATOR PANJANG TEAM NINE\n");
     printf("===========================\n");

@@ -1,7 +1,7 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include "stack.h"
+//#include "stack.h"
 
 typedef char* String;
 
@@ -12,6 +12,6 @@ int LengthStr(String str);
 //menghasilkan satu numbe float
 float StrToFloat(String floatStr);
 //menghasilkan banyak angka float
-stack StrToFloatStack(String str);
+//stack StrToFloatStack(String str);
 
 #endif

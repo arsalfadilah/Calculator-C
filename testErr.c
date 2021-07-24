@@ -1,19 +1,17 @@
 #include <stdio.h>
 #include <Windows.h>
-int main(){
+#include "string.h"
+int main()
+{
+   String str;
+   printf("Test String\n");
+   alokasiStr(&str, "a");
+   //char *ch = "a";
+   //strcpy(str, ch);
 
-puts("hello");
-__try {
-   puts("in try");
-   __try {
-      puts("in try");
-      RAISE_AN_EXCEPTION();
-   } __finally {
-      puts("in finally");
-   }
-} __except( puts("in filter"), EXCEPTION_EXECUTE_HANDLER ) {
-   puts("in except");
-}
-puts("world");
-return 0;
+   // alokasiStr(&str, 'r');
+   printf("ini : %s", str);
+
+
+   return 0;
 }

@@ -1,5 +1,7 @@
 #include "stack.h"
+#include "string.h"
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 address alokasi(infotype x)
@@ -137,4 +139,49 @@ void stackcpy(stack *destination, stack source)
 infotype peek(stack s)
 {
     return s.top->info;
+}
+
+//get element from top to bottom and then reverse
+String toString(stack s)
+{
+    String str;
+    address p;
+    infotype temp = s.top->info;
+
+    //Algoritma
+    //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
+    if (!isStackEmpty(s))
+    {
+        p = s.top;
+        //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+        if (p->info.Operand != 0)
+        {
+            strcpy(str, p->info.Operator);
+        }
+        else
+        {
+            char ch = p->info.Operand + '0';
+            strcpy(str, ch);
+        }
+
+        p = p->next;
+        while (p != NULL)
+        {
+            //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
+            if (p->info.Operand != 0)
+            {
+                strcpy(str, p->info.Operator);
+            }
+            else
+            {
+                char ch = p->info.Operand + '0';
+                strcpy(str, ch);
+            }
+            p = p->next;
+        }
+    }
+    else
+    {
+        printf("[ Empty ]");
+    }
 }
