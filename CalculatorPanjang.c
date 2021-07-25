@@ -207,23 +207,27 @@ void showResultCP(float result, stack postfix, stack prefix)
     scanf("%c", &convert);
     if (convert == 'y' || convert == 'Y')
     {
-        switch (convertSatuan())
+        int pilih;
+        while (pilih != 0)
         {
-        case 1:
-            printf("%.2f centimeter\n", MeterToCentimeter(result));
-            break;
-        case 2:
-            printf("%.5f kilometer\n", MeterToKilometer(result));
-        default:
-            break;
-        }   
+            switch (pilih = convertSatuan())
+            {
+            case 1:
+                printf("%.2f centimeter\n", MeterToCentimeter(result));
+                break;
+            case 2:
+                printf("%.5f kilometer\n", MeterToKilometer(result));
+            default:
+                break;
+            }
+        }
     }
 }
 
 int convertSatuan()
 {
     int choose;
-    printf("\nConvert to : (1)centimeter (2)kilometer (0)cancel\n");
+    printf("\nConvert to : (1)centimeter (2)kilometer (0)back\n");
     printf("Choose : ");
     scanf("%d", &choose);
     return choose;
