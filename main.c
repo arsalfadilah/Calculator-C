@@ -2,8 +2,10 @@
 #include "stack.h"
 #include "CalculatorPanjang.h"
 #include "CalculatorStandart.h"
+#include <Windows.h>
 
 int chooseMainMenu(){
+    system("color 02");
     printf("=======================================\n");
     printf(" WELCOME TO TEAM NINE CALCULATOR APP\n");
     printf("=======================================\n");
@@ -12,13 +14,10 @@ int chooseMainMenu(){
     printf("0. Exit\n\n");
     int pilih;
     printf("Pilih : ");
-    
-
     while(scanf("%d", &pilih)!= 1 && getchar() != '\n'){
         printf("! ONLY INTEGER ! ==> ");
     }
 
-    
     return pilih;
 }
 

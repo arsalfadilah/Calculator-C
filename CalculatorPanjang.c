@@ -220,7 +220,7 @@ void showTitleCalculatorPanjang()
     printf("\tpangkat\t : ^\n");
     printf("\takar\t : $\n");
     printf("3. Tanpa spasi dan tab\n");
-    printf("4. Setiap angka diikuti oleh satuannya,\n   satuan yang diperbolehkan adalah :\n");
+    printf("4. Setiap angka diikuti satuannya,\n   satuan yang sah adalah :\n");
     printf("\tcentimeter : c\n");
     printf("\tmeter      : m\n");
     printf("\tkilometer  : k\n");
