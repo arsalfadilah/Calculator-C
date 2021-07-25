@@ -7,14 +7,12 @@ typedef char* String;
 
 /* Method Utama */
 String input();
+
 void DealokasiString(String *str);
+
 int LengthStr(String str);
+
 //menghasilkan satu numbe float
 float StrToFloat(String floatStr);
-//menghasilkan banyak angka float
-//stack StrToFloatStack(String str);
-
-String alokasiStr(char ch);
-void createString(String *str);
 
 #endif

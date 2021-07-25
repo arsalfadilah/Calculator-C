@@ -75,17 +75,6 @@ void cetakStack(stack s)
     if (!isStackEmpty(s))
     {
         p = s.top;
-        //print info disini
-        // if (p->info.Operand == 0)
-        // {
-        //     printf("%c", p->info.Operator);
-        // }
-        // else
-        // {
-        //     printf("%.2f", p->info.Operand);
-        // }
-
-        // p = p->next;
         while (p != NULL)
         {
             //print info disini
@@ -175,58 +164,3 @@ void reverseStack(stack *s)
         push(&(*s), info);
     }
 }
-
-//get element from top to bottom and then reverse
-// String toString(stack s)
-// {
-//     String str;
-//     createString(&str);
-//     address p;
-//     infotype temp = s.top->info;
-
-//     //Algoritma
-//     //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
-//     if (!isStackEmpty(s))
-//     {
-//         p = s.top;
-//         //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
-//         if (p->info.Operand == 0)
-//         {
-//             char ch = p->info.Operator;
-//             addStr(&str, ch);
-//             printf("operator : %c\n", ch);
-//         }
-//         else
-//         {
-//             char ch = p->info.Operand + '0'; //convert number to char
-//             addStr(&str, ch);
-//             printf("opreand : %c\n", ch);
-//         }
-
-//         p = p->next;
-//         while (p != NULL)
-//         {
-//             //printf("[ operator : %c | operand : %.2f ]\n", p->info.Operator, p->info.Operand);
-//             if (p->info.Operand == 0)
-//             {
-//                 char ch = p->info.Operator;
-//                 addStr(&str, ch);
-//                 printf("operator %c\n", ch);
-//             }
-//             else
-//             {
-//                 char ch = p->info.Operand + '0'; //convert number to char
-//                 addStr(&str, ch);
-//                 printf("operand : %c\n", ch);
-//             }
-//             p = p->next;
-//         }
-//         //strrev(str);
-//     }
-//     else
-//     {
-//         addStr(&str, '-');
-//     }
-//     printf("di tostring : %s", str);
-//     return str;
-// }

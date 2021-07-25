@@ -5,39 +5,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// convert meter to centimeter 
-meter MeterToCentimeter(centimeter cm){
-    return cm*100;
+// convert meter to centimeter
+centimeter MeterToCentimeter(meter m)
+{
+    return m * 100;
 }
 // convert meter to kilometer
-meter MeterToKilometer (kilometer km){
-    return km/100;
-}
-// convert centimenter to kilomoter
-centimeter CentimeterToKilometer (kilometer km){
-return km/100000;
+kilometer MeterToKilometer(meter m)
+{
+    return m / 1000;
 }
 // convert centimeter to kilometer
-float CentimeterToMeter(float m){
-    return m/100;
-}
-// convert kilometer to centimeter
-kilometer KilometerToCentimeter(centimeter cm){
-    return cm*100000;
-}
-// convet kilometer to meter
-float KilometerToMeter(float m){
-    return m*1000;
+meter CentimeterToMeter(centimeter cm)
+{
+    return cm / 100;
 }
 
-bool isSatuan(char inputan){
-    if ((inputan == 'c') || (inputan == 'm') || (inputan == 'k')){
+// convet kilometer to meter
+meter KilometerToMeter(kilometer km)
+{
+    return km * 1000;
+}
+
+bool isSatuan(char inputan)
+{
+    if ((inputan == 'c') || (inputan == 'm') || (inputan == 'k'))
+    {
         return true;
     }
-    else return false;
+    else
+        return false;
 }
 
-void InfixToPostfixCP(stack *postfix, String infix)
+void InfixToPrefixCP(stack *prefix, String infix)
 {
     //create stack
     stack operator;
@@ -63,24 +63,29 @@ void InfixToPostfixCP(stack *postfix, String infix)
                 i++;
                 realloc(floatStr, idxFloatStr * sizeof(char));
             }
-            if(isSatuan(infix[i])){
-                printf("ya satuannya adalah : %c", infix[i]);
-                if(infix[i]=='c'){
+            if (isSatuan(infix[i]))
+            {
+                if (infix[i] == 'c')
+                {
                     //convet str to float
                     cm = StrToFloat(floatStr);
                     //convet centimeter to meter
                     m = CentimeterToMeter(cm);
-                } 
-                else if(infix[i]=='k'){
+                }
+                else if (infix[i] == 'k')
+                {
                     //convet str to float
                     km = StrToFloat(floatStr);
                     //convet centimeter to meter
                     m = KilometerToMeter(km);
                 }
-                else{
+                else
+                {
                     m = StrToFloat(floatStr);
                 }
-            } else {
+            }
+            else
+            {
                 printf("Mohon libatkan satuannya\n");
                 return;
             }
@@ -88,7 +93,7 @@ void InfixToPostfixCP(stack *postfix, String infix)
             //push setiap operand dan jadikan operator \0
             info.Operator = '\0';
             info.Operand = m;
-            push(&(*postfix), info);
+            push(&(*prefix), info);
             //dealoksi string setelah dipakai
             DealokasiString(&floatStr);
         }
@@ -104,7 +109,7 @@ void InfixToPostfixCP(stack *postfix, String infix)
             while (!isStackEmpty(operator) && peek(operator).Operator != '(')
             {
                 pop(&operator, & info);
-                push(&(*postfix), info);
+                push(&(*prefix), info);
             }
             //apakah stack belum kosong namun top dari stack operator bukan '('
             if (!isStackEmpty(operator) && peek(operator).Operator != '(')
@@ -118,13 +123,13 @@ void InfixToPostfixCP(stack *postfix, String infix)
             }
         }
         else
-        {   // tidak : looping selama stack tidak kosong
+        { // tidak : looping selama stack tidak kosong
             // untuk menyimpan operator dengan urutan operasi matematik yang benar
             // (lihat prec untuk mengetahui level setiap operator)
             while (!isStackEmpty(operator) && Prec(infix[i]) <= Prec(peek(operator).Operator))
             {
                 pop(&operator, & info);
-                push(&(*postfix), info);
+                push(&(*prefix), info);
             }
             info.Operand = 0;
             info.Operator = infix[i];
@@ -132,47 +137,94 @@ void InfixToPostfixCP(stack *postfix, String infix)
         }
         i++;
     }
-    //pop semua elem dari stack operator dan tempatkan di stack postfix
+    //pop semua elem dari stack operator dan tempatkan di stack prefix
     while (!isStackEmpty(operator))
     {
         pop(&operator, & info);
-        push(&(*postfix), info);
+        push(&(*prefix), info);
     }
     //dealokasi stack operator
     dealokasi(operator.top);
 }
 
 /* Method Tambahan */
-void runCalculatorPanjang(){
-    //tampil judul 
-    printf("===========================\n");
-    printf("CALCULATOR PANJANG TEAM NINE\n");
-    printf("===========================\n");
-    printf("input : \n");
-    //buat stack postfix agar mudah langsung di calculate
-    stack postfix, prefix, tempPostfix;
-    createStack(&postfix);
-    createStack(&prefix);
-    //input user
-    printf("Input Infix Expression :\n");
-    String infix = input();
-    //convert infix expression to posfix
-    InfixToPostfixCP(&postfix, infix);
-    //copy agar postfix bisa di print lagi
-    stackcpy(&tempPostfix, postfix);
-    //convert postfix to prefix : (reverser the postfix expression)
-    PostfixToPrefix(&prefix, tempPostfix);
-    //calculate
-    float result = calculate(prefix);
+void runCalculatorPanjang()
+{
+    char loop = 'y';
+    HoldCls();
+    //keep calculator live untill user want to back
+    while (loop == 'y' || loop == 'Y')
+    {
+        //tampil judul
+        showTitleCalculatorPanjang();
+        //buat stack postfix agar mudah langsung di calculate
+        stack postfix, prefix;
+        createStack(&postfix);
+        createStack(&prefix);
+        //input user
+        printf("Input Infix Expression :\n");
+        String infix = input();
+        //convert infix expression to prefix
+        InfixToPrefixCP(&prefix, infix);
+        //copykan
+        stackcpy(&postfix, prefix);
+        //reverse stack agar terbaca postfix
+        reverseStack(&postfix);
+        //calculate dari prefix
+        float result = calculate(postfix);
+        //show result
+        showResultCP(result, postfix, prefix);
+        //request for reset
+        fflush(stdin);
+        printf("\nreset (y/t) ? ");
+        scanf("%c", &loop);
+        HoldCls();
+        //dealokasi infix string after use
+        DealokasiString(&infix);
+    }
+}
+
+void showTitleCalculatorPanjang()
+{
+    printf("============================\n");
+    printf("CALCULATOR METRIC TEAM NINE\n");
+    printf("============================\n");
+}
+
+void showResultCP(float result, stack postfix, stack prefix)
+{
+    char convert;
     printf("Result :\n");
-    printf("%.2f m\n", result);
+    printf("%.2f meter\n", result);
     //show a result
-    printf("result Postfix :\n");
+    printf("\nResult Postfix :\n");
     cetakStack(postfix);
     printf("\nResult Prefix :\n");
     cetakStack(prefix);
-    HoldCls();
-    //dealokasi infix string after use
-    DealokasiString(&infix);
 
+    //ask for convet metric
+    printf("\n\nConvert (y/t) ? ");
+    scanf("%c", &convert);
+    if (convert == 'y' || convert == 'Y')
+    {
+        switch (convertSatuan())
+        {
+        case 1:
+            printf("%.2f centimeter\n", MeterToCentimeter(result));
+            break;
+        case 2:
+            printf("%.5f kilometer\n", MeterToKilometer(result));
+        default:
+            break;
+        }   
+    }
+}
+
+int convertSatuan()
+{
+    int choose;
+    printf("\nConvert to : (1)centimeter (2)kilometer (0)cancel\n");
+    printf("Choose : ");
+    scanf("%d", &choose);
+    return choose;
 }

@@ -6,10 +6,6 @@
 #include <math.h>
 #include "stack.h"
 
-void createString(String *str){
-    *str = NULL;
-}
-
 String input()
 {
     String str;
@@ -25,17 +21,6 @@ String input()
     }
     str[i] = '\0';
     return str;
-}
-//
-void addStr(String *str, char ch){
-    int idx = LengthStr(*str);
-    if(idx==0)
-        *str = (String)malloc(1*sizeof(char));
-    (*str)[idx] = ch;
-    idx++;
-    realloc(*str, idx *sizeof(char));
-    
-    (*str)[idx] = '\0';
 }
 
 //menghasilkan satu number float
