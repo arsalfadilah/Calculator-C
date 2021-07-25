@@ -53,5 +53,7 @@ void HoldCls();
 void showTitleCalculatorStandar();
 //show result (rsult, postfix and prefix expression)
 void showResult(float result, stack postfix, stack prefix);
+// mengecek inputan
+bool isInfix(String infix);
 
 #endif

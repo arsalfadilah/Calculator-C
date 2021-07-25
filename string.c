@@ -37,7 +37,7 @@ void DealokasiString(String *str)
 
 int LengthStr(String str)
 {
-    if(str==NULL)
+    if(str[0]=='\0')
         return 0;
     return strlen(str);
 }

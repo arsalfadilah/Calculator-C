@@ -4,12 +4,10 @@
 #include "stack.h"
 #include "string.h"
 
-typedef float meter;
-typedef float kilometer;
-typedef float centimeter;
+typedef float meter, kilometer, centimeter, dekameter, hektometer, desimeter, milimeter;
 
 /* Method Utama kalkulator panjang */
-// convert meter to centimeter
+/* convert meter to centimeter*/
 centimeter MeterToCentimeter(meter m);
 // convert meter to kilometer
 kilometer MeterToKilometer(meter m);
@@ -17,6 +15,14 @@ kilometer MeterToKilometer(meter m);
 meter CentimeterToMeter(centimeter cm);
 // convet kilometer to meter
 meter KilometerToMeter(kilometer km);
+// convert meter to hektometer
+hektometer MeterToHektometer(meter m);
+// convert meter to dekameter 
+dekameter MeterToDekameter(meter m);
+//convert meter to desimeter
+desimeter MeterToDesimeter(meter m);
+//convert meter to milimeter
+milimeter MeterToMilimeter(meter m);
 
 void InfixToPrefixCP(stack *prefix, String infix);
 
@@ -27,5 +33,8 @@ void showTitleCalculatorPanjang();
 void showResultCP(float result, stack postfix, stack prefix);
 
 int convertSatuan();
+
+bool isInfixCP(String infix);
+
 
 #endif

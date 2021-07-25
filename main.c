@@ -11,7 +11,14 @@ int chooseMainMenu(){
     printf("2. Kalkulator Panjang\n");
     printf("0. Exit\n\n");
     int pilih;
-    printf("Pilih : "); scanf("%d", &pilih);
+    printf("Pilih : ");
+    
+
+    while(scanf("%d", &pilih)!= 1 && getchar() != '\n'){
+        printf("! ONLY INTEGER ! ==> ");
+    }
+
+    
     return pilih;
 }
 

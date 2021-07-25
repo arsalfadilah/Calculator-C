@@ -6,6 +6,10 @@
 typedef char* String;
 
 /* Method Utama */
+// memasukan nilai string
+/* I.S String masih kosong
+    I.F String sudah berisi nilai
+*/
 String input();
 
 void DealokasiString(String *str);

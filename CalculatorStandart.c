@@ -60,6 +60,8 @@ bool isOperator(char ch)
     case '/':
     case '^':
     case '$':
+    case '(':
+    case ')':
         return true;
     }
     return false;
@@ -278,6 +280,7 @@ void runCalculatorStandar()
 {
     char loop = 'y';
     HoldCls();
+    
     //keep calculator live untill user want to back
     while (loop == 'y' || loop == 'Y')
     {
@@ -287,10 +290,14 @@ void runCalculatorStandar()
         stack postfix, prefix;
         createStack(&postfix);
         createStack(&prefix);
+        
         //input user
         printf("Input Infix Expression :\n");
         String infix = input();
-        //convert infix expression to prefix
+
+        //Memeriksa apakah inputan benar
+        if (isInfix(infix)){
+            //convert infix expression to prefix
         InfixToPrefix(&prefix, infix);
         //copykan
         stackcpy(&postfix, prefix);
@@ -300,6 +307,12 @@ void runCalculatorStandar()
         float result = calculate(postfix);
         //show result (rsult, postfix and prefix expression)
         showResult(result, postfix, prefix);
+        }
+
+        // Jika inputan salah
+        else printf("Inputan salah! Mohon masukkan hanya angka dengan operatornya (+, -, *, dll.) tanpa spasi");
+
+        
         //request for reset
         printf("\n\nreset (y/t) ? ");
         scanf("%c", &loop);
@@ -322,6 +335,19 @@ void showTitleCalculatorStandar()
     printf("============================\n");
     printf("CALCULATOR STANDAR TEAM NINE\n");
     printf("============================\n");
+    printf("        ATURAN PAKAI\n");
+    printf("1. Tidak menggunakan alfabet\n");
+    printf("2. Memakai Operator yang ada\n");
+    printf("\ttambah\t : +\n");
+    printf("\tkali\t : *\n");
+    printf("\tkurang\t : -\n");
+    printf("\tbagi\t : /\n");
+    printf("\tpangkat\t : ^\n");
+    printf("\takar\t : $\n");
+    printf("3. Tanpa spasi dan tab\n");
+    printf("============================\n");
+    printf("Contoh : 1+2*3-(8/4)^2$\n");
+    printf("============================\n\n");
 }
 
 void showResult(float result, stack postfix, stack prefix)
@@ -333,4 +359,20 @@ void showResult(float result, stack postfix, stack prefix)
     cetakStack(postfix);
     printf("\nResult Prefix :\n");
     cetakStack(prefix);
+}
+
+bool isInfix(String infix){
+    int i = 0;
+    // inisialisasi charOfInfix untuk menyimpan banyak karakter pada infix
+    int charOfInfix = LengthStr(infix);
+    if (charOfInfix == 0) return false;
+    // iterasi untuk pengecekan tiap index
+        while (i < charOfInfix){
+            if (infix[i] == ' ') return false;
+            else if (((infix[i] >= 'a') && (infix[i] <= 'z')) || ((infix[i] >= 'A') && (infix[i] <= 'Z'))) return false;
+            else if ((!isOperand(infix[i])) && (!isOperator(infix[i]))) return false;
+            
+        i++;
+        }
+        return true;
 }

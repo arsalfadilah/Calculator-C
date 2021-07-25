@@ -8,7 +8,7 @@
 
 #include <stdbool.h>
 #include "string.h"
-
+// Atribut Data 
 typedef struct{
     float Operand;  // Angka
     char Operator;  /* +(penjumlahan), -(Pengurangan), x(Perkalian),
@@ -25,8 +25,9 @@ typedef struct{
     address top;
 }stack;
 
+/*** Modul ***/
 /* I.S : S terdefinisi, tidak diketahui nilainya
-   F.S : S diinisialisasi top(s) = nil,
+   F.S : S diinisialisasi top(s) = nul,
 */
 void createStack(stack *s);
 
@@ -37,7 +38,7 @@ address alokasi(infotype x);
 
 /* I.S : P terdefinisi
    F.S : P dikembalikan ke sistem
-   		 Melakukan dealokasi / pengenmbalian address P ke sistem
+   		 Melakukan dealokasi / pengembalian address P ke sistem
 */
 void dealokasi(address p);
 
@@ -62,7 +63,7 @@ void cetakStack(stack s);
 
 //copy stack source ke stack destination
 void stackcpy(stack *destination, stack source);
-
+//Untuk membalikan stack (mengembalikan element bottom ke top)
 void reverseStack(stack *s);
 
 //String toString(stack s);

@@ -20,11 +20,26 @@ meter CentimeterToMeter(centimeter cm)
 {
     return cm / 100;
 }
-
 // convet kilometer to meter
 meter KilometerToMeter(kilometer km)
 {
     return km * 1000;
+}
+// convert meter to hektometer
+hektometer MeterToHektometer(meter m){
+    return m * 0.01;
+}
+// convert meter to dekameter
+dekameter MeterToDekameter(meter m){
+    return m * 0.1;
+}
+// convert meter to deimeter
+desimeter MeterToDesimeter(meter m){
+    return m*10;
+}
+//convert meter to milimeter
+milimeter MeterToMilimeter(meter m){
+    return m*1000;
 }
 
 bool isSatuan(char inputan)
@@ -164,7 +179,9 @@ void runCalculatorPanjang()
         //input user
         printf("Input Infix Expression :\n");
         String infix = input();
-        //convert infix expression to prefix
+        
+        if(isInfixCP(infix)){
+            //convert infix expression to prefix
         InfixToPrefixCP(&prefix, infix);
         //copykan
         stackcpy(&postfix, prefix);
@@ -174,6 +191,10 @@ void runCalculatorPanjang()
         float result = calculate(postfix);
         //show result
         showResultCP(result, postfix, prefix);
+        }
+        // Jika inputan salah
+        else printf("Inputan salah! Mohon masukkan hanya angka dengan operatornya (+, -, *, dll.) tanpa spasi");
+
         //request for reset
         fflush(stdin);
         printf("\nreset (y/t) ? ");
@@ -189,6 +210,23 @@ void showTitleCalculatorPanjang()
     printf("============================\n");
     printf("CALCULATOR METRIC TEAM NINE\n");
     printf("============================\n");
+        printf("        ATURAN PAKAI\n");
+    printf("1. Tidak menggunakan alfabet\n");
+    printf("2. Memakai Operator yang ada\n");
+    printf("\ttambah\t : +\n");
+    printf("\tkali\t : *\n");
+    printf("\tkurang\t : -\n");
+    printf("\tbagi\t : /\n");
+    printf("\tpangkat\t : ^\n");
+    printf("\takar\t : $\n");
+    printf("3. Tanpa spasi dan tab\n");
+    printf("4. Setiap angka diikuti oleh satuannya,\n   satuan yang diperbolehkan adalah :\n");
+    printf("\tcentimeter : c\n");
+    printf("\tmeter      : m\n");
+    printf("\tkilometer  : k\n");
+    printf("============================\n");
+    printf("Contoh : 1c+1k+1m\n");
+    printf("============================\n\n");
 }
 
 void showResultCP(float result, stack postfix, stack prefix)
@@ -213,10 +251,23 @@ void showResultCP(float result, stack postfix, stack prefix)
             switch (pilih = convertSatuan())
             {
             case 1:
-                printf("%.2f centimeter\n", MeterToCentimeter(result));
+                printf("%.6f kilometer\n", MeterToKilometer(result));
                 break;
             case 2:
-                printf("%.5f kilometer\n", MeterToKilometer(result));
+                printf("%.6f hektometer\n", MeterToHektometer(result));
+                break;
+            case 3:
+                printf("%.6f dekameter\n", MeterToDekameter(result));
+                break;
+            case 4:
+                printf("%.6f desimeter\n", MeterToDesimeter(result));
+                break;
+            case 5:
+                printf("%.6f centimeter\n", MeterToCentimeter(result));
+                break;
+            case 6:
+                printf("%.6f milimeter\n", MeterToMilimeter(result));
+                break;
             default:
                 break;
             }
@@ -227,8 +278,26 @@ void showResultCP(float result, stack postfix, stack prefix)
 int convertSatuan()
 {
     int choose;
-    printf("\nConvert to : (1)centimeter (2)kilometer (0)back\n");
+    printf("\nConvert to : (1)kilometer (2)hektometer (3)dekameter\n");
+    printf("             (4)desimeter (5)centimeter (6)milimeter (0)back\n");
     printf("Choose : ");
     scanf("%d", &choose);
     return choose;
+}
+
+bool isInfixCP(String infix){
+    int i = 0;
+    // inisialisasi charOfInfix untuk menyimpan banyak karakter pada infix
+    int charOfInfix = LengthStr(infix);
+    
+    // iterasi untuk pengecekan tiap index
+        while (i < charOfInfix){
+            if ((infix[i] == ' ')  || 
+            (((infix[i] != 'c') && (infix[i] != 'm') && (infix[i] != 'k')) 
+            && 
+            ((!isOperand(infix[i])) && (!isOperator(infix[i]))))) return false;
+
+        i++;
+        }
+        return true;
 }
