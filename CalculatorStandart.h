@@ -39,9 +39,9 @@ void getTwoOperandWithPop(stack *s, float *a, float *b);
 
 //modul tambahan
 //Convert infix to postfix expression
-void InfixToPrefix(stack *prefix, String infix);
-//convert postfix to prefix
-void PostfixToPrefix(stack *prefix, stack postfix);
+void InfixToPostfix(stack *prefix, String infix);
+//convert infix to prefix with algo Infix to postfix
+void InfixToPrefix(stack *Prefix, String infix);
 //run calculator standar program
 void runCalculatorStandar();
 
@@ -52,7 +52,7 @@ void HoldCls();
 //show tittle calculator standar
 void showTitleCalculatorStandar();
 //show result (rsult, postfix and prefix expression)
-void showResult(float result, stack postfix, stack prefix);
+void showResult(float result, stack Prefix, stack Postfix);
 // mengecek inputan
 bool isInfix(String infix);
 

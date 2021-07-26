@@ -71,6 +71,16 @@ void addChar(String *destination, char ch)
     }
 }
 
+void strcopy(String *destination, String Source){
+    int i=0;
+    createString(&(*destination));
+    while (Source[i]!='\0')
+    {
+        addChar(&(*destination), Source[i]);
+        i++;
+    }
+}
+
 //menghasilkan satu number float
 float StrToFloat(String floatStr)
 {

@@ -73,6 +73,28 @@ bool isOperand(char ch)
     return ((ch >= '0' && ch <= '9') || ch == '.');
 }
 
+bool isInfix(String infix)
+{
+    int i = 0;
+    // inisialisasi charOfInfix untuk menyimpan banyak karakter pada infix
+    int charOfInfix = LengthStr(infix);
+    if (charOfInfix == 0)
+        return false;
+    // iterasi untuk pengecekan tiap index
+    while (i < charOfInfix)
+    {
+        if (infix[i] == ' ')
+            return false;
+        else if (((infix[i] >= 'a') && (infix[i] <= 'z')) || ((infix[i] >= 'A') && (infix[i] <= 'Z')))
+            return false;
+        else if ((!isOperand(infix[i])) && (!isOperator(infix[i])))
+            return false;
+
+        i++;
+    }
+    return true;
+}
+
 void setOperand(infotype *info, float x)
 {
     (*info).Operand = x;
@@ -98,29 +120,31 @@ void getTwoOperandWithPop(stack *s, float *a, float *b)
     getOperandWithPop(&(*s), &(*a));
 }
 
-//hasil dari perhitungan postfix expression
-float calculate(stack postfix)
+//hasil dari perhitungan Prefix expression
+float calculate(stack Prefix)
 {
-    //1. peek terlebih dahulu stack postfix
+    //kamus
     stack result;
     createStack(&result);
     infotype forPeek;
     float a, b, res;
-
-    //  1.1 jika operand masukan ke stack result
-    while (!isStackEmpty(postfix))
-    {
-        pop(&postfix, &forPeek);
+    //algoritma
+    //Selama stack Prefix tidak kosong
+    while (!isStackEmpty(Prefix))
+    { //pop stack Prefix masukan ke forpeek
+        pop(&Prefix, &forPeek);
+        //apakah bukan operator ?
         if (!isOperator(forPeek.Operator))
-        {
+        { //jika ya, (berarti operand) maka push operand ke dalam stack result
             push(&result, forPeek);
         }
-        //  1.2 jika operator
+        //jika tidak
         else
-        {
+        { //apakah forpeek baian operator bukan tanda akar ($)
             if (forPeek.Operator != '$')
-            {
+            { //jika ya, dapatkan 2 operand dengan pop stack result dua kali
                 getTwoOperandWithPop(&result, &a, &b);
+                //pemilihan operator yang sesuai agar dapat dilakukan operasi
                 if (forPeek.Operator == '+')
                 {
                     res = add(a, b);
@@ -148,20 +172,23 @@ float calculate(stack postfix)
                 }
             }
             else
-            {
+            { //jika tanda akar maka get operand dengan satu kali pop stack result, kemudian hitung
                 getOperandWithPop(&result, &a);
                 res = radix(a);
             }
+            //set default infotype bagian operand diisi oleh res dan operator '\0'
             setOperand(&forPeek, res);
+            //push ke stack result
             push(&result, forPeek);
         }
     }
+    //element terakhir di stack result akan menjadi hasil dari perhitungan
     pop(&result, &forPeek);
     return (forPeek.Operand);
 }
 
 int Prec(char ch)
-{
+{ //memilih tingkat derajat prioritas operasi
     switch (ch)
     {
     case '+':
@@ -180,9 +207,9 @@ int Prec(char ch)
     return -1;
 }
 
-// Convert infix to prefix
-void InfixToPrefix(stack *prefix, String infix)
-{ 
+// Convert infix to Postfix
+void InfixToPostfix(stack *Postfix, String infix)
+{
     //create stack
     stack operator;
     createStack(&operator);
@@ -209,7 +236,7 @@ void InfixToPrefix(stack *prefix, String infix)
             //convert string to float number
             operand = StrToFloat(floatStr);
             setOperand(&info, operand);
-            push(&(*prefix), info);
+            push(&(*Postfix), info);
             //dealoksi string setelah dipakai
             DealokasiString(&floatStr);
         }
@@ -225,7 +252,7 @@ void InfixToPrefix(stack *prefix, String infix)
             while (!isStackEmpty(operator) && peek(operator).Operator != '(')
             {
                 pop(&operator, & info);
-                push(&(*prefix), info);
+                push(&(*Postfix), info);
             }
             //apakah stack belum kosong namun top dari stack operator bukan '('
             if (!isStackEmpty(operator) && peek(operator).Operator != '(')
@@ -244,35 +271,50 @@ void InfixToPrefix(stack *prefix, String infix)
             while (!isStackEmpty(operator) && Prec(infix[i]) <= Prec(peek(operator).Operator))
             {
                 pop(&operator, & info);
-                push(&(*prefix), info);
+                push(&(*Postfix), info);
             }
             setOperator(&info, infix[i]);
             push(&operator, info);
         }
         i++;
     }
-    //pop semua elem dari stack operator dan tempatkan di stack prefix
+    //pop semua elem dari stack operator dan tempatkan di stack Postfix
     while (!isStackEmpty(operator))
     {
         pop(&operator, & info);
-        push(&(*prefix), info);
+        push(&(*Postfix), info);
     }
     //dealokasi stack operator
     dealokasi(operator.top);
+}
+
+void InfixToPrefix(stack *Prefix, String infix)
+{
+    String temp;
+    //copy dulu
+    strcopy(&temp, infix);
+    //reverse temp infix
+    strrev(temp);
+    //add char
+    addChar(&temp, ')');
+    //use infix to postfix for make prefix
+    InfixToPostfix(&(*Prefix), temp);
+    DealokasiString(&temp);
 }
 
 /* Method Tambahan */
 //memulai kalkultor standar
 void runCalculatorStandar()
 {
+    //kamus
     char loop = 'y';
     float result;
     String infix;
+    stack Prefix, Postfix;
+    createStack(&Prefix);
+    createStack(&Postfix);
+    //algoritma
     HoldCls();
-    //buat stack postfix agar mudah langsung di calculate
-    stack postfix, prefix;
-    createStack(&postfix);
-    createStack(&prefix);
     //keep calculator live untill user want to back
     while (loop == 'y' || loop == 'Y')
     {
@@ -282,19 +324,20 @@ void runCalculatorStandar()
         printf("Input Infix Expression :\n");
         infix = input();
         //Memeriksa apakah inputan benar
-        if (isInfix(infix)){
-            //convert infix expression to prefix
-        InfixToPrefix(&prefix, infix);
-        //copykan
-        stackcpy(&postfix, prefix);
-        //reverse stack agar terbaca postfix
-        reverseStack(&postfix);
-        //calculate dari prefix
-        result = calculate(postfix);
-        //show result (rsult, postfix and prefix expression)
-        showResult(result, postfix, prefix);
-        } 
-        else 
+        if (isInfix(infix))
+        {
+            //convert infix expression to Postfix
+            InfixToPostfix(&Postfix, infix);
+            //convert infix to prefix
+            InfixToPrefix(&Prefix, infix);
+            //reverse stack postfix aga bisa dibaca dari bottom
+            reverseStack(&Postfix);
+            //calculate dari Postfix
+            result = calculate(Postfix);
+            //show result (rsult, Prefix and Postfix expression)
+            showResult(result, Prefix, Postfix);
+        }
+        else
         { // Jika inputan salah
             printf("Inputan salah! Mohon masukkan hanya angka dengan operatornya (+, -, *, dll.) tanpa spasi");
         }
@@ -305,8 +348,8 @@ void runCalculatorStandar()
         //dealokasi infix string after use
         DealokasiString(&infix);
         //remove all stack
-        removeAllStack(&prefix);
-        removeAllStack(&postfix);
+        removeAllStack(&Postfix);
+        removeAllStack(&Prefix);
     }
 }
 
@@ -320,47 +363,29 @@ void HoldCls()
 
 void showTitleCalculatorStandar()
 {
-    printf("============================\n");
-    printf("CALCULATOR STANDAR TEAM NINE\n");
-    printf("============================\n");
-    printf("        ATURAN PAKAI\n");
-    printf("1. Tidak menggunakan alfabet\n");
-    printf("2. Memakai Operator yang ada\n");
-    printf("\ttambah\t : +\n");
-    printf("\tkali\t : *\n");
-    printf("\tkurang\t : -\n");
-    printf("\tbagi\t : /\n");
-    printf("\tpangkat\t : ^\n");
-    printf("\takar\t : $\n");
-    printf("3. Tanpa spasi dan tab\n");
-    printf("============================\n");
-    printf("Contoh : 1+2*3-(8/4)^2$\n");
-    printf("============================\n\n");
+    printf("||    ||    ||    ||    ||    ||    ||    ||\n");
+    printf("============================================\n");
+    printf("||            CALCULATOR STANDAR          ||\n");
+    printf("||        By TEAM NINE Made With Love     ||\n");
+    printf("============================================\n");
+    printf("||              ATURAN PAKAI              ||\n");
+    printf("|| 1. Tidak menggunakan alfabet           ||\n");
+    printf("|| 2. Memakai Operator yang ada           ||\n");
+    printf("||    tambah:(+)|kurang :(-)|kali:(*)     ||\n");
+    printf("||    bagi  :(/)|pangkat:(^)|akar:($)     ||\n");
+    printf("|| 3. Tanpa spasi dan tab                 ||\n");
+    printf("============================================\n");
+    printf("   Contoh : 1+2*3-(8/4)^2$\n");
+    printf("============================================\n\n");
 }
 
-void showResult(float result, stack postfix, stack prefix)
+void showResult(float result, stack Prefix, stack Postfix)
 {
     printf("Result :\n");
     printf("%.2f\n", result);
     //show a result
     printf("\nResult Postfix :\n");
-    cetakStack(postfix);
+    cetakStack(Postfix);
     printf("\nResult Prefix :\n");
-    cetakStack(prefix);
-}
-
-bool isInfix(String infix){
-    int i = 0;
-    // inisialisasi charOfInfix untuk menyimpan banyak karakter pada infix
-    int charOfInfix = LengthStr(infix);
-    if (charOfInfix == 0) return false;
-    // iterasi untuk pengecekan tiap index
-        while (i < charOfInfix){
-            if (infix[i] == ' ') return false;
-            else if (((infix[i] >= 'a') && (infix[i] <= 'z')) || ((infix[i] >= 'A') && (infix[i] <= 'Z'))) return false;
-            else if ((!isOperand(infix[i])) && (!isOperator(infix[i]))) return false;
-            
-        i++;
-        }
-        return true;
+    cetakStack(Prefix);
 }

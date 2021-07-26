@@ -23,4 +23,6 @@ float StrToFloat(String floatStr);
 
 void addChar(String *destination, char ch);
 
+void strcopy(String *destination, String Source);
+
 #endif
