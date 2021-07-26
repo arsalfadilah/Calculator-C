@@ -182,13 +182,14 @@ int Prec(char ch)
 
 // Convert infix to prefix
 void InfixToPrefix(stack *prefix, String infix)
-{
+{ 
     //create stack
     stack operator;
     createStack(&operator);
     //sebagai penampung operand atau operator
     infotype info;
     String floatStr;
+    //char floatStr[20];
     float operand;
     int i = 0, tempIdx = 0, idxFloatStr = 0;
     //scan semua character di String infix
@@ -197,17 +198,14 @@ void InfixToPrefix(stack *prefix, String infix)
         //apakah infix[i] adalah operand (0-9 atau '.') ?
         if (isOperand(infix[i]))
         { //iya : alokasi string untuk convert string number ke float number
-            floatStr = (String)malloc(1 * sizeof(char));
+            createString(&floatStr);
             //looping sampai ketemu bukan operand menandakan angka berakhir
             while (isOperand(infix[i]))
             {
-                floatStr[idxFloatStr] = infix[i];
-                idxFloatStr++;
+                addChar(&floatStr, infix[i]);
                 i++;
-                realloc(floatStr, idxFloatStr * sizeof(char));
             }
             i--;
-            idxFloatStr = 0;
             //convert string to float number
             operand = StrToFloat(floatStr);
             setOperand(&info, operand);
@@ -263,38 +261,26 @@ void InfixToPrefix(stack *prefix, String infix)
     dealokasi(operator.top);
 }
 
-//convert postfix to prefix
-void PostfixToPrefix(stack *prefix, stack postfix)
-{
-    infotype info;
-    while (!isStackEmpty(postfix))
-    {
-        pop(&postfix, &info);
-        push(&(*prefix), info);
-    }
-}
-
 /* Method Tambahan */
 //memulai kalkultor standar
 void runCalculatorStandar()
 {
     char loop = 'y';
+    float result;
+    String infix;
     HoldCls();
-    
+    //buat stack postfix agar mudah langsung di calculate
+    stack postfix, prefix;
+    createStack(&postfix);
+    createStack(&prefix);
     //keep calculator live untill user want to back
     while (loop == 'y' || loop == 'Y')
     {
         //tampil judul
         showTitleCalculatorStandar();
-        //buat stack postfix agar mudah langsung di calculate
-        stack postfix, prefix;
-        createStack(&postfix);
-        createStack(&prefix);
-        
         //input user
         printf("Input Infix Expression :\n");
-        String infix = input();
-
+        infix = input();
         //Memeriksa apakah inputan benar
         if (isInfix(infix)){
             //convert infix expression to prefix
@@ -304,21 +290,23 @@ void runCalculatorStandar()
         //reverse stack agar terbaca postfix
         reverseStack(&postfix);
         //calculate dari prefix
-        float result = calculate(postfix);
+        result = calculate(postfix);
         //show result (rsult, postfix and prefix expression)
         showResult(result, postfix, prefix);
+        } 
+        else 
+        { // Jika inputan salah
+            printf("Inputan salah! Mohon masukkan hanya angka dengan operatornya (+, -, *, dll.) tanpa spasi");
         }
-
-        // Jika inputan salah
-        else printf("Inputan salah! Mohon masukkan hanya angka dengan operatornya (+, -, *, dll.) tanpa spasi");
-
-        
         //request for reset
         printf("\n\nreset (y/t) ? ");
         scanf("%c", &loop);
         HoldCls();
         //dealokasi infix string after use
         DealokasiString(&infix);
+        //remove all stack
+        removeAllStack(&prefix);
+        removeAllStack(&postfix);
     }
 }
 

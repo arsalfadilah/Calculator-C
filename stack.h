@@ -56,6 +56,8 @@ void push(stack *s, infotype x);
 */
 void pop(stack *s, infotype *x);
 
+void removeAllStack(stack *s);
+
 /* I.S : S terdefinisi, mungkin kosong
    F.S : Menampilkan seluruh elemen dalam stack ke layar dari mulai TOP sampai dengan buttom jika tidak kosong
 */

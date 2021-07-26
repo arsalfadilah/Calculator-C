@@ -18,6 +18,7 @@ address alokasi(infotype x)
     }
     else
     {
+        printf("gagal alokasi stack");
         return NULL;
     }
 }
@@ -51,16 +52,27 @@ void pop(stack *s, infotype *x)
     int out;
 
     //Algoritma
-    pTOP = (*s).top;
-    *x = pTOP->info;
-    if (pTOP->next == NULL)
-    { // hanya ada 1 elemen
-        (*s).top = NULL;
-    }
-    else
-    { // lebih dari satu elemen
-        (*s).top = pTOP->next;
+    if (!isStackEmpty(*s))
+    {
+        pTOP = (*s).top;
+        *x = pTOP->info;
+        if (pTOP->next == NULL)
+        { // hanya ada 1 elemen
+            (*s).top = NULL;
+        }
+        else
+        { // lebih dari satu elemen
+            (*s).top = pTOP->next;
+        }
         dealokasi(pTOP->next);
+    }
+}
+
+void removeAllStack(stack *s){
+   infotype temp;
+    while (!isStackEmpty(*s))
+    {
+        pop(&(*s), &temp);
     }
 }
 
