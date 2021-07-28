@@ -4,6 +4,14 @@
 #include "stack.h"
 #include "string.h"
 
+typedef struct HISTORY *addrHs;
+
+typedef struct HISTORY
+{
+    char infix [1000], type [3];
+    double result;
+}history;
+
 /*              BEHAVIOR MAIN             */
 //penjumlahan a + b
 double add(double a, double b);
@@ -31,6 +39,8 @@ void InfixToPrefix(stack *Prefix, stack infix);
 void runCalculatorStandar();
 //tokenization
 stack tokenStrToStack(String infixStr);
+//reset all variables
+void reset(String *infix, stack *posfix, stack *prefix);
 
 /*                GETTER                  */
 //cek apakah a operand atau bukan
@@ -62,5 +72,13 @@ void HoldCls();
 void showTitleCalculatorStandar();
 //show result include (result, postfix and prefix expression)
 void showResult(double result, stack Prefix, stack Postfix);
+
+/*        FILE HANDLING CALCULATOR        */
+//menyimpan history ke dalam file
+void save(history hs);
+//menampilkan semua history dari file
+void showHystory();
+//save in CS mode
+void saveCS(String infix, double result);
 
 #endif

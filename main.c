@@ -8,7 +8,7 @@
 int chooseMainMenu()
 {
     int pilih;
-    system("color 0A");
+    system("color 0E");
     printf("||    ||    ||    ||    ||    ||    ||    ||\n");
     printf("============================================\n");
     printf("||         WELCOME TO CALCULATOR APP      ||\n");
@@ -16,6 +16,7 @@ int chooseMainMenu()
     printf("============================================\n");
     printf("||  1. Kalkulator Standar                 ||\n");
     printf("||  2. Kalkulator Panjang                 ||\n");
+    printf("||  3. History                            ||\n");
     printf("||  0. Exit                               ||\n\n");
     printf("    Pilih : ");
     while (scanf("%d", &pilih) != 1 && getchar() != '\n')
@@ -37,18 +38,23 @@ int main()
         //2. tampil menu utama dan pemilihan menu
         switch (menu = chooseMainMenu())
         {
-            //4. masuk ke setiap menu
+            //3. masuk ke setiap menu
         case 1:
             runCalculatorStandar();
             break;
         case 2:
             runCalculatorPanjang();
             break;
+        case 3:
+            showHystory();
+            printf("\n");
+            HoldCls();
+            break;
         case 0:
-            printf("\nthank you! Have a nice day\n");
+            printf("\nThank you! Have a nice day\n");
             break;
         default:
-            printf("\nsorry menu is not available\n");
+            printf("\nSorry menu is not available\n");
             HoldCls();
             break;
         }

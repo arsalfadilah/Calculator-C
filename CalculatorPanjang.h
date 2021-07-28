@@ -3,6 +3,7 @@
 
 #include "stack.h"
 #include "string.h"
+#include "CalculatorStandart.h"
 
 typedef double meter, kilometer, centimeter, dekameter, hektometer, desimeter, milimeter;
 
@@ -39,5 +40,7 @@ bool isInfixCP(String infix);
 void setOperandCP(infotype *info, double operand, char satuan);
 
 stack tokenStrToStackCP(String infixStr);
+
+void saveCP(String infix, double result);
 
 #endif

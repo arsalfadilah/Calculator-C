@@ -8,14 +8,23 @@
 
 #include <stdio.h>
 
-#define EPSILON 0.0001   // Define your own tolerance
-#define FLOAT_EQ(x,v) (((v - EPSILON) < x) && (x <( v + EPSILON)))
+#define EPSILON 0.0001 // Define your own tolerance
+#define FLOAT_EQ(x, v) (((v - EPSILON) < x) && (x < (v + EPSILON)))
 
+struct threeNum
+{
+   String infix, type;
+   double result;
+};
+
+/* Variable to store user content */
 int main()
 {
-   stack test;
-   String infix = "1m+1c";
-   test = tokenStrToStackCP(infix);
-   cetakStack(test);
+   history hs;
+   strcpy(hs.infix, "1+15");
+   strcpy(hs.type, "CM");
+   hs.result = 10.0;
+   save(hs);
+   showHystory();
    return 0;
 }

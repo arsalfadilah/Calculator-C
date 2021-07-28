@@ -4,6 +4,7 @@
 #include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // convert meter to centimeter
 centimeter MeterToCentimeter(meter m)
@@ -100,12 +101,20 @@ void runCalculatorPanjang()
         printf("\nReset (y/t) ? ");
         scanf("%c", &loop);
         HoldCls();
-        //dealokasi infix string after use
-        DealokasiString(&infixStr);
-        //remove all stack
-        removeAllStack(&Postfix);
-        removeAllStack(&Prefix);
+        //before reset we save to file
+        saveCP(infixStr, result);
+        //reset for use back
+        reset(&infixStr, &Postfix, &Prefix);
     }
+}
+
+void saveCP(String infix, double result)
+{
+    history hs;
+    strcpy(hs.infix, infix);
+    hs.result = result;
+    strcpy(hs.type, "CM");
+    save(hs);
 }
 
 stack tokenStrToStackCP(String infixStr)
@@ -266,7 +275,10 @@ int convertSatuan()
     printf("(1)kilometer (2)hektometer (3)dekameter\n");
     printf("(4)desimeter (5)centimeter (6)milimeter\n(0)back\n");
     printf("Choose : ");
-    scanf("%d", &choose);
+    while (scanf("%d", &choose) != 1 && getchar() != '\n')
+    {
+        printf("! ONLY INTEGER ! ==> ");
+    }
     return choose;
 }
 

@@ -376,12 +376,29 @@ void runCalculatorStandar()
         printf("\n\nReset (y/t) ? ");
         scanf("%c", &loop);
         HoldCls();
-        //dealokasi infix string after use
-        DealokasiString(&infixStr);
-        //remove all stack
-        removeAllStack(&Postfix);
-        removeAllStack(&Prefix);
+        //before reset save terlebih dahulu
+        saveCS(infixStr, result);
+        //reset
+        reset(&infixStr, &Postfix, &Prefix);
     }
+}
+
+void saveCS(String infix, double result)
+{
+    history hs;
+    strcpy(hs.infix, infix);
+    hs.result = result;
+    strcpy(hs.type, "CS");
+    save(hs);
+}
+
+void reset(String *infix, stack *posfix, stack *prefix)
+{
+    //dealokasi infix string after use
+    DealokasiString(&(*infix));
+    //remove all stack
+    removeAllStack(&(*posfix));
+    removeAllStack(&(*prefix));
 }
 
 bool isNegatifOperandStr(String str, int tempIdx)
@@ -503,4 +520,42 @@ void showResult(double result, stack Prefix, stack Postfix)
     cetakStack(Postfix);
     printf("\nResult Prefix :\n");
     cetakStack(Prefix);
+}
+
+/*        FILE HANDLING CALCULATOR        */
+//menyimpan history ke dalam file
+void save(history hs)
+{
+    FILE *file;
+    if ((file = fopen("history.dat", "ab")) == NULL)
+    {
+        printf("Error opening file!\n");
+        return;
+    }
+    fwrite(&hs, sizeof(history), 1, file);
+    fclose(file);
+}
+
+//menampilkan semua history dari file
+void showHystory()
+{
+    FILE *file;
+    history hs;
+    int i = 1;
+
+    if ((file = fopen("history.dat", "r")) == NULL)
+    {
+        printf("Error opening file!\n");
+        return;
+    }
+    while ((fread(&hs, sizeof(history), 1, file)) == 1)
+    {
+        printf("| %d |\n", i);
+        printf("===(%s)===\n", hs.type);
+        printf("Infix :\n");
+        printf("%s = %g\n", hs.infix, hs.result);
+        printf("==========\n");
+        i++;
+    }
+    fclose(file);
 }
