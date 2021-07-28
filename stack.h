@@ -10,7 +10,7 @@
 #include "string.h"
 // Atribut Data 
 typedef struct{
-    float Operand;  // Angka
+    double Operand;  // Angka
     char Operator;  /* +(penjumlahan), -(Pengurangan), x(Perkalian),
                        /(Pembagian), ^(Pangkat), %(Mod), &(akar)*/
 } infotype;

@@ -49,8 +49,6 @@ void pop(stack *s, infotype *x)
 {
     //Kamus
     address pTOP, tmp2;
-    int out;
-
     //Algoritma
     if (!isStackEmpty(*s))
     {
@@ -65,6 +63,10 @@ void pop(stack *s, infotype *x)
             (*s).top = pTOP->next;
         }
         dealokasi(pTOP->next);
+    }else{
+        //default
+        (*x).Operand = 0;
+        (*x).Operator ='\0';
     }
 }
 
@@ -78,27 +80,24 @@ void removeAllStack(stack *s){
 
 void cetakStack(stack s)
 {
-    ElemStack *p, *q;
-
+    address p;
     infotype temp = s.top->info;
 
     //Algoritma
-    //printf("isi stack dari mulai TOP s.d. BOTTOM : \n");
     if (!isStackEmpty(s))
     {
         p = s.top;
         while (p != NULL)
         {
             //print info disini
-            if (p->info.Operand == 0)
-            {
-                printf("%c ", p->info.Operator);
-            }
-            else
+            if (p->info.Operator == '\0')
             {
                 printf("%.2f ", p->info.Operand);
             }
-
+            else
+            {
+               printf("%c ", p->info.Operator);
+            }
             p = p->next;
         }
     }

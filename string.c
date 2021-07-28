@@ -81,11 +81,13 @@ void strcopy(String *destination, String Source){
     }
 }
 
-//menghasilkan satu number float
-float StrToFloat(String floatStr)
+//menghasilkan satu number double
+double StrToFloat(String floatStr)
 {
-    float FloatNum = atof(floatStr);
-    return FloatNum;
+    //double FloatNum = atof(floatStr);
+    //double FloatNum;
+    //sscanf(floatStr, "%f", &FloatNum);
+    return atof(floatStr);
 }
 
 void DealokasiString(String *str)

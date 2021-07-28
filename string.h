@@ -18,8 +18,8 @@ void DealokasiString(String *str);
 
 int LengthStr(String str);
 
-//menghasilkan satu numbe float
-float StrToFloat(String floatStr);
+//menghasilkan satu numbe double
+double StrToFloat(String floatStr);
 
 void addChar(String *destination, char ch);
 
