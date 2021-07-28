@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "string.h"
 
-typedef float meter, kilometer, centimeter, dekameter, hektometer, desimeter, milimeter;
+typedef double meter, kilometer, centimeter, dekameter, hektometer, desimeter, milimeter;
 
 /* Method Utama kalkulator panjang */
 /* convert meter to centimeter*/
@@ -30,11 +30,14 @@ void runCalculatorPanjang();
 
 void showTitleCalculatorPanjang();
 
-void showResultCP(float result, stack postfix, stack prefix);
+void showResultCP(double result, stack postfix, stack prefix);
 
 int convertSatuan();
 
 bool isInfixCP(String infix);
 
+void setOperandCP(infotype *info, double operand, char satuan);
+
+stack tokenStrToStackCP(String infixStr);
 
 #endif

@@ -245,26 +245,25 @@ void InfixToPostfix(stack *Postfix, stack infixed)
     //sebagai penampung operand atau operator
     infotype info, forPeek;
     String floatStr;
-    //char floatStr[20];
     double operand;
     int i = 0, tempIdx = 0, idxFloatStr = 0;
     //scan semua character di String infix
     while (!isStackEmpty(infix))
     {
         pop(&infix, &forPeek);
-        //apakah infix[i] adalah operand (0-9 atau '.') ?
+        //apakah forpeek.operator char kosong ?
         if (forPeek.Operator == '\0')
         { //iya, push kedalam stack postfix
             setOperand(&info, forPeek.Operand);
             push(&(*Postfix), info);
         }
-        //apakah infix ke i adalah '(' ?
+        //tidak , apakah forpeek.operator adalah '(' ?
         else if (forPeek.Operator == '(')
         { //iya : push operator '(' ke stack operator
             setOperator(&info, forPeek.Operator);
             push(&operator, info);
         }
-        //apakah infix yang ke i adalah ')' ?
+        //tidak, apakah forpeek.operator adalah ')' ?
         else if (forPeek.Operator == ')')
         { //iya : pop semua yang ada dalam tanda '( )'. misal : '(+-)'
             while (!isStackEmpty(operator) && peek(operator).Operator != '(')
@@ -490,7 +489,7 @@ void showTitleCalculatorStandar()
     printf("||               modulo :(%%)              ||\n");
     printf("|| 3. Tanpa spasi dan tab                 ||\n");
     printf("============================================\n");
-    printf("   Contoh : 1+2*3-(8/4)^2$\n");
+    printf("   Contoh : 1+2*(-3)-(8/4)^2$\n");
     printf("============================================\n\n");
 }
 
