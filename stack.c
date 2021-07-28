@@ -92,7 +92,7 @@ void cetakStack(stack s)
             //print info disini
             if (p->info.Operator == '\0')
             {
-                printf("%.2f ", p->info.Operand);
+                printf("%g ", p->info.Operand);
             }
             else
             {

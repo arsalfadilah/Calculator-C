@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "string.h"
 
-/*             BEHAVIOR MAIN            */
+/*              BEHAVIOR MAIN             */
 //penjumlahan a + b
 double add(double a, double b);
 //pengurangan a - b
@@ -32,7 +32,7 @@ void runCalculatorStandar();
 //tokenization
 stack tokenStrToStack(String infixStr);
 
-/*                GETTER                 */
+/*                GETTER                  */
 //cek apakah a operand atau bukan
 bool isOperand(char a);
 //cek apakah ch operator atau bukan
@@ -44,7 +44,7 @@ int Prec(char ch);
 // mengecek inputan
 bool isInfix(String infix);
 
-/*                SETTER                 */
+/*                SETTER                  */
 //setting operand = x, operator = '\0'
 void setOperand(infotype *info, double x);
 //setting operator = operator, operand = 0

@@ -307,17 +307,29 @@ void InfixToPostfix(stack *Postfix, stack infixed)
 
 void InfixToPrefix(stack *Prefix, stack infix)
 {
-    stack temp;
+    stack temp, temp2;
+    createStack(&temp2);
     infotype info;
     //copy dulu
     stackcpy(&temp, infix);
-    //add char ')' biar nutup
-    setOperator(&info, ')');
-    push(&temp, info);
-    //reverse temp infix
-    reverseStack(&temp);
-    //use infix to postfix for make prefix
-    InfixToPostfix(&(*Prefix), temp);
+    //create reverse stack temp with
+    //Replace ( with ) and vice versa
+    while (!isStackEmpty(temp))
+    {
+        pop(&temp, &info);
+        if (info.Operator == '(')
+        {
+            setOperator(&info, ')');
+        }
+        else if (info.Operand == ')')
+        {
+            setOperator(&info, '(');
+        }
+        push(&temp2, info);
+    }
+    //use infix to postfix make prefix
+    InfixToPostfix(&(*Prefix), temp2);
+    //reverse that for print bottom to top
     reverseStack(&(*Prefix));
 }
 
