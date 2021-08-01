@@ -43,26 +43,10 @@ stack tokenStrToStack(String infixStr);
 void reset(String *infix, stack *posfix, stack *prefix);
 
 /*                GETTER                  */
-//cek apakah a operand atau bukan
-bool isOperand(char a);
-//cek apakah ch operator atau bukan
-bool isOperator(char ch);
-//cek apakah negatif number atau bukan
-bool isNegatifOperandStr(String str, int tempIdx);
 //predenci atau level derajat setiap operator
 int Prec(char ch);
 // mengecek inputan
 bool isInfix(String infix);
-
-/*                SETTER                  */
-//setting operand = x, operator = '\0'
-void setOperand(infotype *info, double x);
-//setting operator = operator, operand = 0
-void setOperator(infotype *info, char operator);
-//get operand from stack s with pop
-void getOperandWithPop(stack *s, double *x);
-//get two operand from stack s with pop
-void getTwoOperandWithPop(stack *s, double *a, double *b);
 
 /*                  UI                    */
 //menahan layar meminta inputan 
@@ -72,6 +56,8 @@ void HoldCls();
 void showTitleCalculatorStandar();
 //show result include (result, postfix and prefix expression)
 void showResult(double result, stack Prefix, stack Postfix);
+//menampilkan header/judul menu history
+void showTitleHistory();
 
 /*        FILE HANDLING CALCULATOR        */
 //menyimpan history ke dalam file
@@ -80,5 +66,6 @@ void save(history hs);
 void showHystory();
 //save in CS mode
 void saveCS(String infix, double result);
+
 
 #endif

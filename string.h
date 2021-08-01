@@ -1,7 +1,8 @@
 #ifndef STRING_H
 #define STRING_H
 
-//#include "stack.h"
+#include "stack.h"
+#include <stdbool.h>
 
 typedef char* String;
 
@@ -24,5 +25,13 @@ double StrToFloat(String floatStr);
 void addChar(String *destination, char ch);
 
 void strcopy(String *destination, String Source);
+
+stack TokenizationCP(String infixStr);
+
+stack TokenizationCS(String infixStr);
+
+bool isStrNegatifOperand(String str, int tempIdx);
+
+bool isSatuan(char inputan);
 
 #endif

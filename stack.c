@@ -175,3 +175,71 @@ void reverseStack(stack *s)
         push(&(*s), info);
     }
 }
+
+void setOperator(infotype *info, char operator)
+{
+    (*info).Operand = 0;
+    (*info).Operator = operator;
+}
+
+bool isOperator(char ch)
+{
+    switch (ch)
+    {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '^':
+    case '$':
+    case '%':
+    case '(':
+    case ')':
+        return true;
+    }
+    return false;
+}
+
+//cek apakah ch operand atau bukan
+bool isOperand(char ch)
+{
+    return ((ch >= '0' && ch <= '9') || ch == '.');
+}
+
+void setOperand(infotype *info, double x)
+{
+    (*info).Operand = x;
+    (*info).Operator = '\0';
+}
+
+void getOperandWithPop(stack *s, double *x)
+{
+    infotype info;
+    pop(&(*s), &info);
+    *x = info.Operand;
+}
+
+void getTwoOperandWithPop(stack *s, double *a, double *b)
+{
+    getOperandWithPop(&(*s), &(*b));
+    getOperandWithPop(&(*s), &(*a));
+}
+
+void setOperandCP(infotype *info, double operand, char satuan)
+{
+    switch (satuan)
+    {
+    case 'c':
+        operand = operand/100;
+        break;
+    case 'm':
+        break;
+    case 'k':
+        operand = operand*1000;
+        break;
+    default:
+        printf("Something wrong!\n");
+        break;
+    }
+    setOperand(&(*info), operand);
+}
