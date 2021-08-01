@@ -6,7 +6,7 @@
 #include <math.h>
 #include "stack.h"
 
-String input()
+String inputStr()
 {
     String str, newAlloc;
     char c;
@@ -83,7 +83,7 @@ void strcopy(String *destination, String Source)
 }
 
 //menghasilkan satu number double
-double StrToFloat(String floatStr)
+double StrToDouble(String floatStr)
 {
     //double FloatNum = atof(floatStr);
     //double FloatNum;
@@ -91,7 +91,7 @@ double StrToFloat(String floatStr)
     return atof(floatStr);
 }
 
-void DealokasiString(String *str)
+void DealokasiStr(String *str)
 {
     (*str) = NULL;
     free((*str));
@@ -123,7 +123,7 @@ stack TokenizationCS(String infixStr)
                 idx++;
             }
             idx--;
-            operand = StrToFloat(operandStr);
+            operand = StrToDouble(operandStr);
             setOperand(&info, operand);
         }
         else
@@ -137,7 +137,7 @@ stack TokenizationCS(String infixStr)
                     idx++;
                 }
                 //buang )
-                operand = StrToFloat(operandStr);
+                operand = StrToDouble(operandStr);
                 operand = operand * -1;
                 setOperand(&info, operand);
             }
@@ -146,7 +146,7 @@ stack TokenizationCS(String infixStr)
                 setOperator(&info, infixStr[idx]);
             }
         }
-        DealokasiString(&operandStr);
+        DealokasiStr(&operandStr);
         push(&infix, info);
         idx++;
     }
@@ -182,7 +182,7 @@ stack TokenizationCP(String infixStr)
                 push(&err, info);
                 return err;
             }
-            operand = StrToFloat(operandStr);
+            operand = StrToDouble(operandStr);
             setOperandCP(&info, operand, infixStr[idx]);
         }
         else if (isStrNegatifOperand(infixStr, idx))
@@ -201,7 +201,7 @@ stack TokenizationCP(String infixStr)
                 push(&err, info);
                 return err;
             }
-            operand = StrToFloat(operandStr);
+            operand = StrToDouble(operandStr);
             operand = operand * -1;
             setOperandCP(&info, operand, infixStr[idx]);
         }
@@ -209,7 +209,7 @@ stack TokenizationCP(String infixStr)
         {
             setOperator(&info, infixStr[idx]);
         }
-        DealokasiString(&operandStr);
+        DealokasiStr(&operandStr);
         push(&infix, info);
         idx++;
     }

@@ -65,9 +65,9 @@ void runCalculatorPanjang()
     {
         //tampil judul
         showTitleCalculatorPanjang();
-        //input user
+        //inputStr user
         printf("Input Infix Expression :\n");
-        infixStr = input();
+        infixStr = inputStr();
         //Memeriksa apakah inputan benar
         if (isInfixCP(infixStr))
         {

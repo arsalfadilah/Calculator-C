@@ -51,6 +51,14 @@ void createStack(stack *s);
 */
 address alokasi(infotype x);
 
+
+/* 
+   Keterangan : 
+   I.S : S terdefinisi sembarang, mungkin kosong
+   F.S : S bertambah sebuah elemen sebagai elemen pertama
+*/
+void push(stack *s, infotype x);
+
 /*=============================================*/
 /*==============   DESSTRUCTOR  ===============*/
 /*=============================================*/
@@ -63,116 +71,119 @@ address alokasi(infotype x);
 */
 void dealokasi(address p);
 
+/* 
+   Keterangan : Menghapus element paling atas (top) pada stack s dan menyimpan value yang dihapus ke infotype x
+   I.S : stack s teridentifikasi dan tidak kosong
+   F.S : menghapus element paling atas(top) pada stack
+*/
+void pop(stack *s, infotype *x);
+
+/* 
+   Keterangan : Menghapus semua element pada stack s
+   I.S : stack s tidak kosong
+   F.S : stack s kosong yang ditandai stack bagian top = NULL
+*/
+void removeAllStack(stack *s);
+
 /*=============================================*/
 /*==============     SETTER     ===============*/
 /*=============================================*/
 
 /* 
-   Keterangan : 
-   I.S : 
-   F.S : 
+   Keterangan : Mengatur nilai infotype info.operand diisi oleh angka (operand)
+   I.S : double x terinisialisasi
+   F.S : infotype memiliki value info.operand = x dan info.operator = '\0'
 */
 void setOperand(infotype *info, double x);
 
 /* 
-   Keterangan : 
-   I.S : 
-   F.S : 
+   Keterangan : Mengatur nilai infotype info.operator diisi oleh karakter operator
+   I.S : operator tidak kosong atau terinisialisasi
+   F.S : infotype memiliki value infotype.operator = operator dan infotype.operand = 0
 */
 void setOperator(infotype *info, char operator);
 
 /* 
-   Keterangan : 
-   I.S : 
-   F.S : 
+   Keterangan : Mengatur nilai infotype info.operand diisi oleh angka (operand) yang mempunyai satuan meter
+   I.S : operand belum terkonversi ke satuan meter
+   F.S : infotype info.operand = operand yang telah terkonversi ke satuan meter dan info.operator = '\0'
 */
 void setOperandCP(infotype *info, double operand, char satuan);
-/* 
-   Keterangan : 
-   I.S : 
-   F.S : 
-*/
-void pop(stack *s, infotype *x);
-/* 
-   Keterangan : 
-   I.S : 
-   F.S : 
-*/
-void removeAllStack(stack *s);
-/* I.S : S terdefinisi, mungkin kosong
-   F.S : Menampilkan seluruh elemen dalam stack ke layar dari mulai TOP sampai dengan buttom jika tidak kosong
-*/
-
-/* {Kelompok Interaksi Dengan I/O Device} */
-/* I.S : S terdefinisi sembarang, mungkin kosong
-   F.S : S bertambah sebuah elemen sebagai elemen pertama
-*/
-void push(stack *s, infotype x);
 
 /*=============================================*/
 /*==============     GETTER     ===============*/
 /*=============================================*/
-void getOperandWithPop(stack *s, double *x);
+
 /* 
-   Keterangan : 
-   I.S : 
-   F.S : 
+   Keterangan : Mendapatkan operand dari pop element stack
+   I.S : Operand belum terinisialisasi
+   F.S : Operand berhasil didapatkan atau terinisialisasi
+*/
+void getOperandWithPop(stack *s, double *x);
+
+/* 
+   Keterangan : Mendapatkan operand a dan b dengan dua kali pop
+   I.S : stack s tidak kosong dan operand a, b belum terinisialisasi
+   F.S : operand a dan b sudah terinisialisasi
 */
 void getTwoOperandWithPop(stack *s, double *a, double *b);
-/* 
-   Keterangan : 
-   I.S : 
-   F.S : 
-*/
 
-//peek top element
+/* 
+   Keterangan : Mengembalikan nilai elemen stack paling atas (top) suatu stack.
+   I.S : stack s dapat kosong atau tidak
+   F.S : Mengembailkan nilai info dari elemen stack paling atas dari stack tersebut.
+*/
 infotype peek(stack s);
 
-/* {Kelompok Operasi Cek elemen kosong} */
-//Mengirimkan true jika stack kosong, false jika tidak
+/* 
+   Keterangan : Memeriksa apakah suatu stack kosong, true bila kosong dan false bila tidak
+   I.S : Tidak diketahui apakah suatu stack kosong
+   F.S : Mengembalikan nilai true atau false
+*/
 bool isStackEmpty(stack s);
 
-//ini perlu di modif:
-//cek apakah a operand atau bukan
+/* 
+   Keterangan : Memeriksa suatu karakter a adalah karakter yang berupa operand/angka (0-9 atau titik ‘.’), true bila iya dan false bila tidak
+   I.S : a telah terdefinisi
+   F.S : Mengembalikan nilai true atau false
+*/
 bool isOperand(char a);
-//cek apakah ch operator atau bukan
+
+/* 
+   Keterangan : Memeriksa apakah karakter ch adalah operator (+, -, *, /, $, ^, %), true bila karakter ch adalah karakter operator dan false bila tidak
+   I.S : Karakter ch telah terinisialiasi
+   F.S : Mengembalikan atau false
+*/
 bool isOperator(char ch);
 
+
+/*=============================================*/
+/*============== MODUL PENDUKUNG ==============*/
 /*=============================================*/
 
-
-/*============== MODUL TAMBAHAN ================*/
-void cetakStack(stack s);
-
-//copy stack source ke stack destination
-void stackcpy(stack *destination, stack source);
-//Untuk membalikan stack (mengembalikan element bottom ke top)
-void reverseStack(stack *s);
-/*** Modul ***/
-
-
-/* {Operasi terhadap komponen : selektor Get dan Set} */
-//Destruktor or Dealokator
-//Mengirim sebuah elemen stack dalam bentuk address
-
-
-
-
-
-
-
-
-/* I.S : S terdefinisi, Stack tidak kosong
-   F.S : Menghapus elemen pada top(s)
+/* 
+   Keterangan : Menduplikasi stack source ke stack destination
+   I.S : stack source telah terisi, mungkin kosong
+   F.S : stack destination sama dengan stack source
 */
+void stackcpy(stack *destination, stack source);
 
+/* 
+   Keterangan : Membalikkan suatu stack
+   I.S : stack tidak kosong
+   F.S : stack s menjadi terbalik ditandai dengan top menjadi bottom
+*/
+void reverseStack(stack *s);
 
+/*=============================================*/
+/*================= MODUL UI ==================*/
+/*=============================================*/
 
-//String toString(stack s);
-
-
-
-/*                SETTER                  */
-
+/* 
+   Keterangan : Menampilkan seluruh element pada stack ke layar, apabila kosong menampilkan [empty] ke layar
+   I.S : S terdefinisi, mungkin kosong
+   F.S : Menampilkan seluruh elemen dalam stack ke layar dari mulai TOP sampai dengan buttom jika tidak kosong
+*/
+void cetakStack(stack s);
 
 #endif

@@ -224,7 +224,7 @@ void InfixToPostfix(stack *Postfix, stack infixed)
             }
             //apakah stack belum kosong namun top dari stack operator bukan '('
             if (!isStackEmpty(operator) && peek(operator).Operator != '(')
-            { //iya : show error input operator dan kembalikan NULL
+            { //iya : show error inputStr operator dan kembalikan NULL
                 printf("Wrong Input Operators\n");
                 return;
             }
@@ -302,9 +302,9 @@ void runCalculatorStandar()
     {
         //tampil judul
         showTitleCalculatorStandar();
-        //input user
+        //inputStr user
         printf("Input Infix Expression :\n");
-        infixStr = input();
+        infixStr = inputStr();
         //Memeriksa apakah inputan benar
         if (isInfix(infixStr))
         {
@@ -346,7 +346,7 @@ void saveCS(String infix, double result)
 void reset(String *infix, stack *posfix, stack *prefix)
 {
     //dealokasi infix string after use
-    DealokasiString(&(*infix));
+    DealokasiStr(&(*infix));
     //remove all stack
     removeAllStack(&(*posfix));
     removeAllStack(&(*prefix));
@@ -401,7 +401,7 @@ stack tokenStrToStack(String infixStr)
                 idx++;
             }
             idx--;
-            operand = StrToFloat(operandStr);
+            operand = StrToDouble(operandStr);
             setOperand(&info, operand);
         }
         else
@@ -415,7 +415,7 @@ stack tokenStrToStack(String infixStr)
                     idx++;
                 }
                 //buang )
-                operand = StrToFloat(operandStr);
+                operand = StrToDouble(operandStr);
                 operand = operand * -1;
                 setOperand(&info, operand);
             }
@@ -424,7 +424,7 @@ stack tokenStrToStack(String infixStr)
                 setOperator(&info, infixStr[idx]);
             }
         }
-        DealokasiString(&operandStr);
+        DealokasiStr(&operandStr);
         push(&infix, info);
         idx++;
     }
