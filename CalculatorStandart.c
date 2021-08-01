@@ -73,6 +73,30 @@ double radix(double a)
     return sqrt(a);
 }
 
+bool isOperator(char ch)
+{
+    switch (ch)
+    {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '^':
+    case '$':
+    case '%':
+    case '(':
+    case ')':
+        return true;
+    }
+    return false;
+}
+
+//cek apakah ch operand atau bukan
+bool isOperand(char ch)
+{
+    return ((ch >= '0' && ch <= '9') || ch == '.');
+}
+
 bool isInfix(String infix)
 {
     int i = 0;
@@ -93,6 +117,31 @@ bool isInfix(String infix)
         i++;
     }
     return true;
+}
+
+void setOperand(infotype *info, double x)
+{
+    (*info).Operand = x;
+    (*info).Operator = '\0';
+}
+
+void setOperator(infotype *info, char operator)
+{
+    (*info).Operand = 0;
+    (*info).Operator = operator;
+}
+
+void getOperandWithPop(stack *s, double *x)
+{
+    infotype info;
+    pop(&(*s), &info);
+    *x = info.Operand;
+}
+
+void getTwoOperandWithPop(stack *s, double *a, double *b)
+{
+    getOperandWithPop(&(*s), &(*b));
+    getOperandWithPop(&(*s), &(*a));
 }
 
 //hasil dari perhitungan Prefix expression
@@ -309,7 +358,7 @@ void runCalculatorStandar()
         if (isInfix(infixStr))
         {
             //tokenization string to stack
-            infix = TokenizationCS(infixStr);
+            infix = tokenStrToStack(infixStr);
             //convert infix expression to Postfix
             InfixToPostfix(&Postfix, infix);
             //convert infix to prefix
@@ -492,47 +541,21 @@ void showHystory()
 {
     FILE *file;
     history hs;
-    int i = 1, maxShow = 5;
-    char next = 'y';
+    int i = 1;
 
-    if ((file = fopen("history.dat", "rb")) == NULL)
+    if ((file = fopen("history.dat", "r")) == NULL)
     {
         printf("Error opening file!\n");
         return;
     }
-    showTitleHistory();
-    fflush(stdin);
-    while (((fread(&hs, sizeof(history), 1, file)) == 1) && i <= maxShow)
+    while ((fread(&hs, sizeof(history), 1, file)) == 1)
     {
-        printf("===(%s)===\n", hs.type);
         printf("| %d |\n", i);
+        printf("===(%s)===\n", hs.type);
         printf("Infix :\n");
-        if(strcmp(hs.type, "CS")==0)
-            printf("%s = %g\n", hs.infix, hs.result);
-        else
-            printf("%s = %g meter\n", hs.infix, hs.result);
+        printf("%s = %g\n", hs.infix, hs.result);
         printf("==========\n");
-        if (i == 5)
-        {
-            printf("Next (y/t) ? ");
-            scanf("%c", &next);
-            if (next == 'y' || next == 'Y')
-            {
-                maxShow *= 2;
-                showTitleHistory();
-            }
-        }
         i++;
     }
     fclose(file);
-}
-
-void showTitleHistory()
-{
-    HoldCls();
-    printf("============================================\n");
-    printf("/** ====           HISTORY           === **/\n");
-    printf(" CS = Calculator Standar/Biasa\n");
-    printf(" CM = Calculator Metric/Panjang\n");
-    printf("============================================\n");
 }

@@ -7,12 +7,17 @@
 #define STACK_H
 
 #include <stdbool.h>
+<<<<<<< HEAD
 
 /*=============================================*/
 /*==============  ATTRIBUT DATA  ==============*/
 /*=============================================*/
 
 /* infotype adalah tipe data bentukan yang berisi opereand:double dan operator:char */
+=======
+#include "string.h"
+// Atribut Data 
+>>>>>>> parent of 404c976 (refactor modul token)
 typedef struct{
     double Operand;  // Angka
     char Operator;  /* +(penjumlahan), -(Pengurangan), x(Perkalian),
@@ -132,6 +137,7 @@ infotype peek(stack s);
 //Mengirimkan true jika stack kosong, false jika tidak
 bool isStackEmpty(stack s);
 
+<<<<<<< HEAD
 //ini perlu di modif:
 //cek apakah a operand atau bukan
 bool isOperand(char a);
@@ -173,6 +179,8 @@ void reverseStack(stack *s);
 
 
 /*                SETTER                  */
+=======
+>>>>>>> parent of 404c976 (refactor modul token)
 
 
 #endif
