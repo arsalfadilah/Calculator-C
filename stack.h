@@ -7,7 +7,7 @@
 #define STACK_H
 
 #include <stdbool.h>
-#include "string.h"
+
 // Atribut Data 
 typedef struct{
     double Operand;  // Angka
@@ -74,6 +74,22 @@ void reverseStack(stack *s);
 //Mengirimkan true jika stack kosong, false jika tidak
 bool isStackEmpty(stack s);
 
+//ini perlu di modif:
+//cek apakah a operand atau bukan
+bool isOperand(char a);
+//cek apakah ch operator atau bukan
+bool isOperator(char ch);
 
+/*                SETTER                  */
+//setting operand = x, operator = '\0'
+void setOperand(infotype *info, double x);
+//setting operator = operator, operand = 0
+void setOperator(infotype *info, char operator);
+//get operand from stack s with pop
+void getOperandWithPop(stack *s, double *x);
+//get two operand from stack s with pop
+void getTwoOperandWithPop(stack *s, double *a, double *b);
+//setting operand untuk calculator panjang
+void setOperandCP(infotype *info, double operand, char satuan);
 
 #endif

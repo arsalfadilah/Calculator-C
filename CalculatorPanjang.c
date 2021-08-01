@@ -47,16 +47,6 @@ milimeter MeterToMilimeter(meter m)
     return m * 1000;
 }
 
-bool isSatuan(char inputan)
-{
-    if ((inputan == 'c') || (inputan == 'm') || (inputan == 'k'))
-    {
-        return true;
-    }
-    else
-        return false;
-}
-
 /* Method Tambahan */
 void runCalculatorPanjang()
 {
@@ -82,7 +72,7 @@ void runCalculatorPanjang()
         if (isInfixCP(infixStr))
         {
             //tokenization string to stack
-            infix = tokenStrToStackCP(infixStr);
+            infix = TokenizationCP(infixStr);
             //convert infix expression to Postfix
             InfixToPostfix(&Postfix, infix);
             //convert infix to prefix
@@ -115,88 +105,6 @@ void saveCP(String infix, double result)
     hs.result = result;
     strcpy(hs.type, "CM");
     save(hs);
-}
-
-stack tokenStrToStackCP(String infixStr)
-{
-    stack infix, err;
-    String operandStr;
-    infotype info;
-    double operand;
-    int idx = 0, lengthInfix = LengthStr(infixStr);
-    createStack(&infix);
-    createStack(&err);
-    while (idx < lengthInfix)
-    {
-        createString(&operandStr);
-        if (isOperand(infixStr[idx]))
-        {
-            while (isOperand(infixStr[idx]))
-            {
-                addChar(&operandStr, infixStr[idx]);
-                idx++;
-            }
-            if (!isSatuan(infixStr[idx]))
-            {
-                printf("Harap masukan satuannya, return 0");
-                setOperand(&info, 0.0);
-                push(&err, info);
-                return err;
-            }
-            operand = StrToFloat(operandStr);
-            setOperandCP(&info, operand, infixStr[idx]);
-        }
-        else if (isNegatifOperandStr(infixStr, idx))
-        {
-            idx += 2; //buang (-
-            while (isOperand(infixStr[idx]))
-            {
-                addChar(&operandStr, infixStr[idx]);
-                idx++;
-            }
-            //buang )
-            if (!isSatuan(infixStr[idx]))
-            {
-                printf("Harap masukan satuannya, return 0");
-                setOperand(&info, 0.0);
-                push(&err, info);
-                return err;
-            }
-            operand = StrToFloat(operandStr);
-            operand = operand * -1;
-            setOperandCP(&info, operand, infixStr[idx]);
-        }
-        else
-        {
-            setOperator(&info, infixStr[idx]);
-        }
-        DealokasiString(&operandStr);
-        push(&infix, info);
-        idx++;
-    }
-    //reverse for acces in bottom
-    reverseStack(&infix);
-
-    return infix;
-}
-
-void setOperandCP(infotype *info, double operand, char satuan)
-{
-    switch (satuan)
-    {
-    case 'c':
-        operand = CentimeterToMeter(operand);
-        break;
-    case 'm':
-        break;
-    case 'k':
-        operand = KilometerToMeter(operand);
-        break;
-    default:
-        printf("Something wrong!\n");
-        break;
-    }
-    setOperand(&(*info), operand);
 }
 
 void showTitleCalculatorPanjang()

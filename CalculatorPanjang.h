@@ -37,8 +37,6 @@ int convertSatuan();
 
 bool isInfixCP(String infix);
 
-void setOperandCP(infotype *info, double operand, char satuan);
-
 stack tokenStrToStackCP(String infixStr);
 
 void saveCP(String infix, double result);

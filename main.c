@@ -52,6 +52,7 @@ int main()
             break;
         case 0:
             printf("\nThank you! Have a nice day\n");
+            HoldCls();
             break;
         default:
             printf("\nSorry menu is not available\n");
