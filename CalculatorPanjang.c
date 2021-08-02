@@ -138,7 +138,7 @@ void showResultCP(double result, String infix, stack postfix, stack prefix)
     char convert;
     int pilih = -1;
     printf("Result :\n");
-    printf("%g meter\n", result);
+    printf("%.10g meter\n", result);
     //show a result
     printf("\nResult Infix (meter) :\n");
     printf("%s", infix);
@@ -158,22 +158,22 @@ void showResultCP(double result, String infix, stack postfix, stack prefix)
             switch (pilih = convertSatuan())
             {
             case 1:
-                printf("%g kilometer\n", MeterToKilometer(result));
+                printf("%.10g kilometer\n", MeterToKilometer(result));
                 break;
             case 2:
-                printf("%g hektometer\n", MeterToHektometer(result));
+                printf("%.10g hektometer\n", MeterToHektometer(result));
                 break;
             case 3:
-                printf("%g dekameter\n", MeterToDekameter(result));
+                printf("%.10g dekameter\n", MeterToDekameter(result));
                 break;
             case 4:
-                printf("%g desimeter\n", MeterToDesimeter(result));
+                printf("%.10g desimeter\n", MeterToDesimeter(result));
                 break;
             case 5:
-                printf("%g centimeter\n", MeterToCentimeter(result));
+                printf("%.10g centimeter\n", MeterToCentimeter(result));
                 break;
             case 6:
-                printf("%g milimeter\n", MeterToMilimeter(result));
+                printf("%.10g milimeter\n", MeterToMilimeter(result));
                 break;
             default:
                 break;

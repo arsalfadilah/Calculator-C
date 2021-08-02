@@ -416,7 +416,7 @@ void showResult(double result, String infix, stack Prefix, stack Postfix)
 {
     //result from calculate
     printf("Result :\n");
-    printf("%g\n", result);
+    printf("%.10g\n", result);
     //show a result postfix and prefix
     printf("\nResult Infix :\n");
     printf("%s", infix);
@@ -461,9 +461,9 @@ void showHystory()
         printf("| %d |\n", i);
         printf("Infix :\n");
         if(strcmp(hs.type, "CS")==0)
-            printf("%s = %g\n", hs.infix, hs.result);
+            printf("%s = %.10g\n", hs.infix, hs.result);
         else
-            printf("%s = %g meter\n", hs.infix, hs.result);
+            printf("%s = %.10g meter\n", hs.infix, hs.result);
         printf("==========\n");
         if (i == maxShow)
         {
