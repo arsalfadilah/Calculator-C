@@ -81,6 +81,8 @@ void runCalculatorPanjang()
             result = calculate(Postfix);
             //show result (rsult, Prefix and Postfix expression)
             showResultCP(result, infixStr, Postfix, Prefix);
+            //before reset we save to file
+            saveCP(infixStr, result);
         }
         else
         { // Jika inputan salah
@@ -91,8 +93,6 @@ void runCalculatorPanjang()
         printf("\nReset (y/t) ? ");
         scanf("%c", &loop);
         HoldCls();
-        //before reset we save to file
-        saveCP(infixStr, result);
         //reset for use back
         reset(&infixStr, &Postfix, &Prefix);
     }

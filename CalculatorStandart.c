@@ -318,6 +318,8 @@ void runCalculatorStandar()
             result = calculate(Postfix);
             //show result (rsult, Prefix and Postfix expression)
             showResult(result, infixStr, Prefix, Postfix);
+            //before reset save terlebih dahulu
+            saveCS(infixStr, result);
         }
         else
         { // Jika inputan salah
@@ -327,8 +329,6 @@ void runCalculatorStandar()
         printf("\n\nReset (y/t) ? ");
         scanf("%c", &loop);
         HoldCls();
-        //before reset save terlebih dahulu
-        saveCS(infixStr, result);
         //reset
         reset(&infixStr, &Postfix, &Prefix);
     }
