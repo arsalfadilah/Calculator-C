@@ -116,7 +116,7 @@ void showTitleCalculatorPanjang();
    I.S : Format hasil tidak tertampilkan
    F.S : Format hasil tertampilkan
 */
-void showResultCP(double result, stack postfix, stack prefix);
+void showResultCP(double result, String infix, stack postfix, stack prefix);
 
 /* 
    Keterangan : Mengembalikan pilihan pengguna ingin mengonversikan hasil dari operasi Calculator Panjang dari satuan meter ke satuan lainnya

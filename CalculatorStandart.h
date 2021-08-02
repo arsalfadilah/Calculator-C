@@ -138,7 +138,7 @@ void showTitleCalculatorStandar();
    I.S : hasil dari perhitungan, ekpresi prefix dan postfix telah terdefinisi
    F.S : Muncul hasil perhitungan, prefix dan postfix ke layar
 */
-void showResult(double result, stack Prefix, stack Postfix);
+void showResult(double result, String infix, stack Prefix, stack Postfix);
 
 /* 
    Keterangan : Menampilkan format judul fitur history

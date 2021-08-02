@@ -303,7 +303,7 @@ void runCalculatorStandar()
         //tampil judul
         showTitleCalculatorStandar();
         //inputStr user
-        printf("Input Infix Expression :\n");
+        printf("Input Operasi Matematika :\n");
         infixStr = inputStr();
         //Memeriksa apakah inputan benar
         if (isInfix(infixStr))
@@ -317,7 +317,7 @@ void runCalculatorStandar()
             //calculate dari Postfix
             result = calculate(Postfix);
             //show result (rsult, Prefix and Postfix expression)
-            showResult(result, Prefix, Postfix);
+            showResult(result, infixStr, Prefix, Postfix);
         }
         else
         { // Jika inputan salah
@@ -412,12 +412,14 @@ void showTitleCalculatorStandar()
     printf("============================================\n\n");
 }
 
-void showResult(double result, stack Prefix, stack Postfix)
+void showResult(double result, String infix, stack Prefix, stack Postfix)
 {
     //result from calculate
     printf("Result :\n");
     printf("%g\n", result);
     //show a result postfix and prefix
+    printf("\nResult Infix :\n");
+    printf("%s", infix);
     printf("\nResult Postfix :\n");
     cetakStack(Postfix);
     printf("\nResult Prefix :\n");

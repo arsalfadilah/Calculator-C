@@ -66,7 +66,7 @@ void runCalculatorPanjang()
         //tampil judul
         showTitleCalculatorPanjang();
         //inputStr user
-        printf("Input Infix Expression :\n");
+        printf("Input Operasi Matematika :\n");
         infixStr = inputStr();
         //Memeriksa apakah inputan benar
         if (isInfixCP(infixStr))
@@ -80,7 +80,7 @@ void runCalculatorPanjang()
             //calculate dari Postfix
             result = calculate(Postfix);
             //show result (rsult, Prefix and Postfix expression)
-            showResultCP(result, Postfix, Prefix);
+            showResultCP(result, infixStr, Postfix, Prefix);
         }
         else
         { // Jika inputan salah
@@ -133,13 +133,15 @@ void showTitleCalculatorPanjang()
     printf("============================================\n\n");
 }
 
-void showResultCP(double result, stack postfix, stack prefix)
+void showResultCP(double result, String infix, stack postfix, stack prefix)
 {
     char convert;
     int pilih = -1;
     printf("Result :\n");
     printf("%g meter\n", result);
     //show a result
+    printf("\nResult Infix (meter) :\n");
+    printf("%s", infix);
     printf("\nResult Postfix (meter) :\n");
     cetakStack(postfix);
     printf("\nResult Prefix (meter) :\n");
