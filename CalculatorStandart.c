@@ -340,7 +340,9 @@ void saveCS(String infix, double result)
     strcpy(hs.infix, infix);
     hs.result = result;
     strcpy(hs.type, "CS");
+    reverseHystory();
     save(hs);
+    reverseHystory();
 }
 
 void reset(String *infix, stack *posfix, stack *prefix)
@@ -441,7 +443,7 @@ void showHystory()
 {
     FILE *file;
     history hs;
-    int i = 1, maxShow = 5;
+    int i = 1, maxShow = 5, max = maxShow;
     char next = 'y';
 
     if ((file = fopen("history.dat", "rb")) == NULL)
@@ -450,7 +452,7 @@ void showHystory()
         return;
     }
     showTitleHistory();
-    fflush(stdin);
+   
     while (((fread(&hs, sizeof(history), 1, file)) == 1) && i <= maxShow)
     {
         printf("===(%s)===\n", hs.type);
@@ -461,13 +463,14 @@ void showHystory()
         else
             printf("%s = %g meter\n", hs.infix, hs.result);
         printf("==========\n");
-        if (i == 5)
+        if (i == maxShow)
         {
             printf("Next (y/t) ? ");
+            fflush(stdin);
             scanf("%c", &next);
             if (next == 'y' || next == 'Y')
             {
-                maxShow *= 2;
+                maxShow += max;
                 showTitleHistory();
             }
         }
@@ -476,11 +479,60 @@ void showHystory()
     fclose(file);
 }
 
+void reverseHystory()
+{
+    FILE *file, *temp;
+    history hs;
+    history his[100];
+    int i = 0, maxShow = 5, max =maxShow;
+    char next = 'y';
+    //buka dulu history.dat untuk memasukan ke dalam array history
+    if ((file = fopen("history.dat", "rb")) == NULL)
+    {
+        printf("Error opening file history.dat!\n");
+        return;
+    }
+    //masukan seluh data ke array histori
+    while (((fread(&his[i], sizeof(history), 1, file)) == 1))
+    {
+        i++;
+    }
+    i--;
+    //tutup file history.dat dan hapus content tersebut
+    fclose(file = fopen("history.dat", "wb"));
+    //buka temp.dat
+    if((temp = fopen("temp.dat", "ab"))==NULL){
+        printf("Error opening file history.dat!");
+        return;
+    }
+    //masukan history dari idx terakhir array histori ke file temp.dat
+    while(i>=0){
+        fwrite(&his[i], sizeof(history), 1, temp);
+        i--;
+    }
+    //tutup temp.dat
+    fclose(temp);
+
+    //copy file temp.dat ke histori.dat
+    if ((temp = fopen("temp.dat", "rb")) == NULL)
+    {
+        printf("Error opening file history.dat!\n");
+        return;
+    }
+    while (((fread(&hs, sizeof(history), 1, temp)) == 1))
+    {
+        save(hs);
+    }
+    //hapus temp.dat
+    fclose(temp = fopen("temp.dat", "wb"));
+}
+
 void showTitleHistory()
 {
     HoldCls();
     printf("============================================\n");
     printf("/** ====           HISTORY           === **/\n");
+    printf(" Urutan : terbaru sampai terlama/\n");
     printf(" CS = Calculator Standar/Biasa\n");
     printf(" CM = Calculator Metric/Panjang\n");
     printf("============================================\n");

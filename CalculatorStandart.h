@@ -164,6 +164,13 @@ void save(history hs);
 void showHystory();
 
 /* 
+   Keterangan : membalikan record file history dari akhir ke awal
+   I.S : riwayat/history terdefinisi
+   F.S : riwayat/history telah terbalik
+*/
+void reverseHystory();
+
+/* 
    Keterangan : Menyimpan data ke file dengan kode fitur CS atau Calculator Standar/biasa.
    I.S : data belum tersimpan
    F.S : data sudah tersimpan dengan kode fitur CS

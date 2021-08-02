@@ -104,7 +104,9 @@ void saveCP(String infix, double result)
     strcpy(hs.infix, infix);
     hs.result = result;
     strcpy(hs.type, "CM");
+    reverseHystory();
     save(hs);
+    reverseHystory();
 }
 
 void showTitleCalculatorPanjang()

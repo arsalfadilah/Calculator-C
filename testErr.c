@@ -20,17 +20,6 @@ struct threeNum
 /* Variable to store user content */
 int main()
 {
-   String c;
-   createString(&c);
-   addChar(&c, '1');
-   addChar(&c, '+');
-   addChar(&c, '2');
-   addChar(&c, '+');
-   addChar(&c, '(');
-   addChar(&c, '-');
-   addChar(&c, '1');
-   addChar(&c, '1');
-   addChar(&c, ')');
-   stack a = TokenizationCS(c);
-   cetakStack(a);
+   reverseHystory();
+    showHystory();
 }
