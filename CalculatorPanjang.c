@@ -124,6 +124,8 @@ void showTitleCalculatorPanjang()
     printf("||     bagi(/)  |pangkat(^)|akar($)       ||\n");
     printf("||               modulo(%%)                ||\n");
     printf("|| 3. Tanpa spasi atau tab                ||\n");
+    printf("|| 4. Jika memasukan angka negatif        ||\n");
+    printf("||    ('-angka/operand') seperti (-10)    ||\n");
     printf("============================================\n");
     printf("   Contoh : (-1m)+2c*3m-(8c/4c)^2k$         \n");
     printf("============================================\n\n");

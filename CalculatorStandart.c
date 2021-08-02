@@ -381,59 +381,6 @@ bool isNegatifOperandStr(String str, int tempIdx)
     return false;
 }
 
-//infixStr sudah sah operasinya
-stack tokenStrToStack(String infixStr)
-{
-    stack infix;
-    String operandStr;
-    infotype info;
-    double operand;
-    int idx = 0, lengthInfix = LengthStr(infixStr);
-    createStack(&infix);
-    while (idx < lengthInfix)
-    {
-        createString(&operandStr);
-        if (isOperand(infixStr[idx]))
-        {
-            while (isOperand(infixStr[idx]))
-            {
-                addChar(&operandStr, infixStr[idx]);
-                idx++;
-            }
-            idx--;
-            operand = StrToDouble(operandStr);
-            setOperand(&info, operand);
-        }
-        else
-        {
-            if (isNegatifOperandStr(infixStr, idx))
-            {
-                idx += 2; //buang (-
-                while (isOperand(infixStr[idx]))
-                {
-                    addChar(&operandStr, infixStr[idx]);
-                    idx++;
-                }
-                //buang )
-                operand = StrToDouble(operandStr);
-                operand = operand * -1;
-                setOperand(&info, operand);
-            }
-            else
-            {
-                setOperator(&info, infixStr[idx]);
-            }
-        }
-        DealokasiStr(&operandStr);
-        push(&infix, info);
-        idx++;
-    }
-    //reverse for acces in bottom
-    reverseStack(&infix);
-
-    return infix;
-}
-
 /* Method UI Calculator */
 void HoldCls()
 {
@@ -456,6 +403,8 @@ void showTitleCalculatorStandar()
     printf("||    bagi  :(/)|pangkat:(^)|akar:($)     ||\n");
     printf("||               modulo :(%%)              ||\n");
     printf("|| 3. Tanpa spasi dan tab                 ||\n");
+    printf("|| 4. Jika memasukan angka negatif        ||\n");
+    printf("||    ('-angka/operand') seperti (-10)    ||\n");
     printf("============================================\n");
     printf("   Contoh : 1+2*(-3)-(8/4)^2$\n");
     printf("============================================\n\n");
