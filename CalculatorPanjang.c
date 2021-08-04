@@ -128,6 +128,12 @@ void showTitleCalculatorPanjang()
     printf("|| 3. Tanpa spasi atau tab                ||\n");
     printf("|| 4. Jika memasukan angka negatif        ||\n");
     printf("||    ('-angka/operand') seperti (-10)    ||\n");
+    printf("|| 5. Jika ingin tersimpan di file,       ||\n");
+    printf("||    operasi matematika maximal 1000     ||\n");
+    printf("||    karakter                            ||\n");
+    printf("|| 6. Maximal result yang ditampilkan     ||\n");
+    printf("||    10 digit sebelum koma dan 4-6 digit ||\n");
+    printf("||    setelah koma                        ||\n");
     printf("============================================\n");
     printf("   Contoh : (-1m)+2c*3m-(8c/4c)^2k$         \n");
     printf("============================================\n\n");
